@@ -1,363 +1,504 @@
-import React, { useState } from "react";
+import React from "react";
 import { Link } from "react-router-dom";
 import {
   Github,
   Linkedin,
   Mail,
   ExternalLink,
-  Code,
-  Sparkles,
-  Zap,
+  CheckCircle2,
+  ArrowRight,
+  Instagram,
+  Facebook,
+  MessageCircle,
+  Award,
+  Users,
+  Briefcase,
 } from "lucide-react";
 
-function App() {
-  const [hoveredProject, setHoveredProject] = useState(null);
-  const [hoveredSkill, setHoveredSkill] = useState(null);
-
-  const projects = [
+function ProfessionalPortfolio() {
+  const testimonials = [
     {
-      id: 1,
-      title: "Rolex",
-      description: "E-commerce futuristic cu AI integration și plăți crypto",
-      tech: ["React", "Web3", "AI"],
-      gradient: "from-purple-500 to-pink-500",
-      glow: "shadow-[0_0_30px_rgba(168,85,247,0.6)]",
+      name: "Maria Popescu",
+      role: "CEO, TechStart Romania",
+      content:
+        "Colaborarea cu Arcadii a fost excepțională. Profesionalism, deadlines respectate și calitate superioară.",
+      rating: 5,
     },
     {
-      id: 2,
-      title: "Breastfeeding Consultant",
-      description:
-        "Platformă online dedicată sprijinirii și consilierii mamelor care alăptează",
-
-      tech: ["Next.js", "Three.js", "D3"],
-      gradient: "from-cyan-500 to-blue-500",
-      glow: "shadow-[0_0_30px_rgba(6,182,212,0.6)]",
+      name: "John Smith",
+      role: "Product Manager, UK Ventures",
+      content:
+        "One of the best developers I've worked with. Great communication and technical skills.",
+      rating: 5,
     },
-    {
-      id: 3,
-      title: "Quantum Chat",
-      description: "Aplicație de messaging cu criptare end-to-end",
-      tech: ["React", "WebRTC", "Node.js"],
-      gradient: "from-green-500 to-emerald-500",
-      glow: "shadow-[0_0_30px_rgba(16,185,129,0.6)]",
-    },
-    {
-      id: 4,
-      title: "AI Creator",
-      description:
-        "Tool pentru generare de conținut cu inteligență artificială",
-      tech: ["Python", "OpenAI", "React"],
-      gradient: "from-orange-500 to-red-500",
-      glow: "shadow-[0_0_30px_rgba(249,115,22,0.6)]",
-    },
-  ];
-
-  const skills = [
-    { name: "HTML", color: "orange" },
-    { name: "CSS", color: "blue" },
-    { name: "PHP", color: "purple" },
-    { name: "JavaScript", color: "yellow" },
-    { name: "React", color: "cyan" },
-    { name: "Node.js", color: "green" },
-    { name: "REST API", color: "pink" },
-    { name: "Tailwind", color: "emerald" },
   ];
 
   return (
-    <div className="min-h-screen bg-gray-900 text-white overflow-hidden relative">
-      {/* Animated background grid */}
-      <div className="fixed inset-0 opacity-20">
-        <div
-          className="absolute inset-0"
-          style={{
-            backgroundImage: `
-            linear-gradient(rgba(6, 182, 212, 0.3) 1px, transparent 1px),
-            linear-gradient(90deg, rgba(6, 182, 212, 0.3) 1px, transparent 1px)
-          `,
-            backgroundSize: "50px 50px",
-          }}
-        ></div>
-      </div>
+    <div className="min-h-screen bg-white">
+      {/* Navigation */}
+      <nav className="bg-white border-b border-gray-200 sticky top-0 z-50 shadow-sm">
+        <div className="max-w-7xl mx-auto px-6 lg:px-8">
+          <div className="flex justify-between items-center h-20">
+            <div className="flex items-center space-x-2">
+              <div className="w-10 h-10 bg-slate-900 rounded-lg flex items-center justify-center">
+                <span className="text-white font-bold text-xl">AF</span>
+              </div>
+              <span className="text-xl font-bold text-gray-900">
+                Arcadii Florean
+              </span>
+            </div>
 
-      {/* Glowing orbs */}
-      <div className="fixed top-20 right-20 w-96 h-96 bg-purple-600 rounded-full blur-3xl opacity-20 animate-pulse"></div>
-      <div
-        className="fixed bottom-20 left-20 w-96 h-96 bg-cyan-600 rounded-full blur-3xl opacity-20 animate-pulse"
-        style={{ animationDelay: "1s" }}
-      ></div>
+            <div className="hidden md:flex space-x-8">
+              <a
+                href="#about"
+                className="text-gray-700 hover:text-gray-900 font-medium transition-colors"
+              >
+                Despre
+              </a>
+              <a
+                href="#services"
+                className="text-gray-700 hover:text-gray-900 font-medium transition-colors"
+              >
+                Servicii
+              </a>
+              <a
+                href="#testimonials"
+                className="text-gray-700 hover:text-gray-900 font-medium transition-colors"
+              >
+                Testimoniale
+              </a>
+              <Link to="/pricing">
+                <span className="text-gray-700 hover:text-gray-900 font-medium transition-colors cursor-pointer">
+                  Prețuri
+                </span>
+              </Link>
+            </div>
 
-      <div className="relative z-10 max-w-7xl mx-auto px-8 py-12">
-        {/* Header with Photo - POZA ÎN DREAPTA */}
-        <header className="mb-20">
+            <Link to="/contact">
+              <button className="px-6 py-2.5 bg-slate-900 text-white rounded-lg font-semibold hover:bg-slate-800 transition-colors">
+                Hai să colaborăm
+              </button>
+            </Link>
+          </div>
+        </div>
+      </nav>
+
+      {/* Hero Section */}
+      <section className="bg-gradient-to-b from-slate-50 to-white py-20 lg:py-32">
+        <div className="max-w-7xl mx-auto px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-            {/* Partea STÂNGĂ - Text și Nume */}
-            <div className="text-center lg:text-left order-2 lg:order-1">
-              <div className="relative inline-block mb-6">
-                <h1 className="text-6xl lg:text-7xl font-black mb-2 bg-gradient-to-r from-cyan-400 via-purple-400 to-pink-400 bg-clip-text text-transparent animate-pulse">
-                  Arcadii Florean
-                </h1>
-                <div className="absolute -inset-1 bg-gradient-to-r from-cyan-500 to-purple-500 rounded-lg blur opacity-30"></div>
+            <div>
+              <div className="inline-flex items-center px-4 py-2 bg-slate-100 rounded-full mb-6">
+                <div className="w-2 h-2 bg-green-500 rounded-full mr-2 animate-pulse"></div>
+                <span className="text-sm font-medium text-gray-700">
+                  Disponibil pentru proiecte noi
+                </span>
               </div>
 
-              <div className="flex items-center justify-center lg:justify-start gap-3 mb-8">
-                <Zap className="w-8 h-8 text-yellow-400 animate-bounce" />
-                <p className="text-3xl font-bold">
-                  <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-purple-400">
-                    Full Stack Developer
-                  </span>
-                </p>
-                <Code
-                  className="w-8 h-8 text-cyan-400 animate-bounce"
-                  style={{ animationDelay: "0.2s" }}
-                />
-              </div>
+              <h1 className="text-5xl lg:text-6xl font-bold text-gray-900 mb-6 leading-tight">
+                Full Stack Developer
+                <span className="block text-slate-700">
+                  & Web Solutions Expert
+                </span>
+              </h1>
 
-              <p className="text-xl text-gray-300 leading-relaxed mb-10 max-w-xl lg:max-w-none">
-                Construiesc experiențe web{" "}
-                <span className="text-cyan-400 font-bold">futuriste</span> și
-                <span className="text-purple-400 font-bold"> inovatoare</span>.
-                Pasionat de{" "}
-                <span className="text-pink-400 font-bold">tehnologie</span> și
-                design modern! ⚡
+              <p className="text-xl text-gray-600 mb-8 leading-relaxed">
+                Transformăm idei în produse digitale de succes. Specializat în
+                dezvoltare web modernă, cu focus pe performanță, scalabilitate
+                și experiență utilizator de top.
               </p>
 
+              <div className="flex flex-wrap gap-4 mb-8">
+                <Link to="/contact">
+                  <button className="px-8 py-4 bg-slate-900 text-white rounded-lg font-semibold hover:bg-slate-800 transition-all flex items-center gap-2 group">
+                    <span>Discută cu mine</span>
+                    <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+                  </button>
+                </Link>
+                <Link to="/pricing">
+                  <button className="px-8 py-4 bg-white border-2 border-gray-300 text-gray-900 rounded-lg font-semibold hover:border-gray-400 transition-all">
+                    Vezi servicii
+                  </button>
+                </Link>
+              </div>
+
               {/* Social Links */}
-              <div className="flex justify-center lg:justify-start gap-6">
+              <div className="flex items-center gap-4">
+                <span className="text-sm text-gray-500 font-medium">
+                  Conectează-te:
+                </span>
                 {[
-                  { Icon: Github, label: "GitHub", color: "purple", link: "#" },
+                  {
+                    Icon: Github,
+                    link: "https://github.com/ArcadiiFlorean",
+                    label: "GitHub",
+                  },
                   {
                     Icon: Linkedin,
+                    link: "https://www.linkedin.com/in/arcadii-florean-6a9584397/",
                     label: "LinkedIn",
-                    color: "cyan",
-                    link: "#",
                   },
                   {
                     Icon: Mail,
+                    link: "mailto:webFlorean@gmail.com",
                     label: "Email",
-                    color: "pink",
-                    link: "mailto:your@email.com",
                   },
-                ].map(({ Icon, label, color, link }) => (
+                  {
+                    Icon: Instagram,
+                    link: "https://www.instagram.com/arcadiiflorean/",
+                    label: "Instagram",
+                  },
+                ].map(({ Icon, link, label }) => (
                   <a
                     key={label}
                     href={link}
-                    className="p-4 bg-gray-800 border-2 border-purple-500 rounded-lg
-                              hover:bg-gray-700 transition-all hover:scale-110 
-                              hover:shadow-[0_0_30px_rgba(168,85,247,0.6)]"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="p-2 text-gray-600 hover:text-gray-900 hover:bg-gray-100 rounded-lg transition-all"
+                    aria-label={label}
                   >
-                    <Icon className="w-7 h-7 text-purple-400" />
+                    <Icon className="w-5 h-5" />
                   </a>
                 ))}
               </div>
             </div>
 
-            {/* Partea DREAPTĂ - Poză MARE */}
-            <div className="flex justify-center lg:justify-end order-1 lg:order-2">
-              <div className="relative group">
-                <div className="absolute inset-0 bg-gradient-to-r from-cyan-500 via-purple-500 to-pink-500 rounded-full blur-3xl opacity-75 group-hover:opacity-100 transition-opacity animate-pulse"></div>
-                <div className="relative w-80 h-80 lg:w-[450px] lg:h-[450px] rounded-full overflow-hidden border-4 border-cyan-400 shadow-[0_0_80px_rgba(6,182,212,0.8)]">
-                  <img
-                    src="/Foto.jpg"
-                    alt="Profile"
-                    className="w-full h-full object-cover"
-                  />
-                </div>
-                <div className="absolute -bottom-4 -right-4 w-16 h-16 lg:w-20 lg:h-20 bg-green-500 rounded-full border-4 border-gray-900 flex items-center justify-center shadow-[0_0_30px_rgba(34,197,94,0.8)]">
-                  <Sparkles className="w-8 h-8 lg:w-10 lg:h-10 text-white" />
+            <div className="relative">
+              {/* Elegant Photo Frame Design */}
+              <div className="relative w-full max-w-lg mx-auto">
+                {/* Decorative border */}
+                <div className="absolute -inset-4 bg-gradient-to-br from-slate-200 via-slate-100 to-white rounded-[3rem] opacity-60"></div>
+
+                {/* Main photo container */}
+                <div className="relative">
+                  {/* Corner accent - top left */}
+                  <div className="absolute -top-3 -left-3 w-20 h-20 border-t-4 border-l-4 border-slate-800 rounded-tl-3xl z-10"></div>
+
+                  {/* Corner accent - bottom right */}
+                  <div className="absolute -bottom-3 -right-3 w-20 h-20 border-b-4 border-r-4 border-slate-800 rounded-br-3xl z-10"></div>
+
+                  {/* Photo frame */}
+                  <div className="relative overflow-hidden rounded-3xl shadow-2xl border-4 border-white">
+                    <div className="aspect-[4/5] bg-slate-100">
+                      <img
+                        src="/Foto.jpg"
+                        alt="Arcadii Florean - Professional Developer"
+                        className="w-full h-full object-cover hover:scale-105 transition-all duration-700"
+                      />
+                    </div>
+                  </div>
+
+                  {/* Subtle bottom accent line */}
+                  <div className="absolute -bottom-6 left-1/2 transform -translate-x-1/2 w-32 h-1 bg-slate-800"></div>
                 </div>
               </div>
             </div>
           </div>
-        </header>
+        </div>
+      </section>
 
-        {/* About Section */}
-        <section className="mb-24">
-          <div className="flex items-center gap-4 mb-8">
-            <div className="h-1 w-16 bg-gradient-to-r from-cyan-500 to-transparent"></div>
-            <h2 className="text-5xl font-black text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-purple-400">
-              DESPRE MINE
+      {/* About Section */}
+      <section id="about" className="py-20 lg:py-32 bg-white">
+        <div className="max-w-7xl mx-auto px-6 lg:px-8">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+            <div>
+              <h2 className="text-4xl lg:text-5xl font-bold text-gray-900 mb-6">
+                De ce să lucrezi cu mine?
+              </h2>
+              <div className="w-20 h-1 bg-slate-900 mb-8"></div>
+              <div className="space-y-6 text-lg text-gray-700 leading-relaxed">
+                <p>
+                  Cu peste <strong>5 ani de experiență</strong> în dezvoltarea
+                  web, am ajutat zeci de companii să-și transforme viziunea
+                  digitală în realitate.
+                </p>
+                <p>
+                  Fiecare proiect este tratat cu maximum de{" "}
+                  <strong>atenție la detalii</strong>, asigurându-mă că
+                  rezultatul nu doar arată bine, ci și funcționează perfect și
+                  generează rezultate concrete pentru afacerea ta.
+                </p>
+              </div>
+            </div>
+
+            <div className="grid grid-cols-2 gap-6">
+              {[
+                { number: "50+", label: "Proiecte livrate", icon: Briefcase },
+                { number: "30+", label: "Clienți satisfăcuți", icon: Users },
+                { number: "100%", label: "Dedicare", icon: Award },
+                {
+                  number: "24/7",
+                  label: "Suport disponibil",
+                  icon: CheckCircle2,
+                },
+              ].map((item, index) => (
+                <div
+                  key={index}
+                  className="bg-slate-50 p-6 rounded-2xl border-2 border-slate-200 hover:border-slate-900 transition-all"
+                >
+                  <item.icon className="w-8 h-8 text-slate-900 mb-4" />
+                  <div className="text-3xl font-bold text-slate-900 mb-2">
+                    {item.number}
+                  </div>
+                  <div className="text-sm text-gray-600 font-medium">
+                    {item.label}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Services Overview - Simple & Elegant */}
+      <section id="services" className="py-20 lg:py-32 bg-white">
+        <div className="max-w-7xl mx-auto px-6 lg:px-8">
+          <div className="text-center mb-16">
+            <h2 className="text-4xl lg:text-5xl font-bold text-gray-900 mb-4">
+              Serviciile mele
             </h2>
-            <div className="h-1 flex-1 bg-gradient-to-r from-purple-500 to-transparent"></div>
-          </div>
-
-          <div className="bg-gray-800 bg-opacity-50 backdrop-blur-sm p-8 rounded-2xl border-2 border-cyan-500 shadow-[0_0_50px_rgba(6,182,212,0.3)] hover:shadow-[0_0_80px_rgba(6,182,212,0.5)] transition-all">
-            <p className="text-xl text-gray-300 leading-relaxed mb-6">
-              {" "}
-              <span className="text-cyan-400 font-semibold">
-                Developer pasionat
-              </span>{" "}
-              de crearea de aplicații web moderne și interactive. Îmi place să
-              explorez cele mai noi tehnologii și să transform idei complexe în
-              soluții elegante.
-            </p>
-            <p className="text-xl text-gray-300 leading-relaxed">
-              Experiență în dezvoltarea full-stack, cu focus pe{" "}
-              <span className="text-purple-400 font-semibold">React</span>,
-              <span className="text-green-400 font-semibold"> Node.js</span> și
-              <span className="text-pink-400 font-semibold"> modern UI/UX</span>
-              . Mereu învăț și experimentez cu tehnologii noi!
+            <p className="text-xl text-gray-600 max-w-2xl mx-auto">
+              Specializat în crearea de landing pages și website-uri
+              profesionale
             </p>
           </div>
-        </section>
 
-        {/* Skills Section */}
-        <section className="mb-24">
-          <div className="flex items-center gap-4 mb-8">
-            <div className="h-1 w-16 bg-gradient-to-r from-purple-500 to-transparent"></div>
-            <h2 className="text-5xl font-black text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-400">
-              SKILLS
-            </h2>
-            <div className="h-1 flex-1 bg-gradient-to-r from-pink-500 to-transparent"></div>
-          </div>
-
-          <div className="flex flex-wrap gap-4 justify-center">
-            {skills.map((skill, index) => (
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 max-w-5xl mx-auto">
+            {[
+              {
+                number: "01",
+                title: "Landing Pages",
+                description:
+                  "Pagini de destinație optimizate pentru conversie maximă. Perfecte pentru campanii de marketing, lansări de produse și generare de lead-uri calificați.",
+                features: [
+                  "Design optimizat pentru conversie",
+                  "Mobile-first & Responsive",
+                  "Formulare contact integrate",
+                  "Google Analytics inclus",
+                  "SEO optimizat",
+                  "Livrare rapidă (3-7 zile)",
+                ],
+                highlight: "Ideal pentru campanii de marketing",
+              },
+              {
+                number: "02",
+                title: "Website-uri Business",
+                description:
+                  "Site-uri web profesionale de prezentare care inspiră încredere și ajută la creșterea afacerii tale. De la site-uri simple la platforme complexe.",
+                features: [
+                  "Design personalizat premium",
+                  "Până la 15 pagini incluse",
+                  "Blog/Știri integrat",
+                  "Panou administrare ușor",
+                  "SEO avansat",
+                  "Hosting inclus (1 an)",
+                ],
+                highlight: "Perfect pentru companii și freelanceri",
+              },
+            ].map((service, index) => (
               <div
-                key={skill.name}
-                className="px-8 py-4 bg-gray-800 border-2 border-cyan-500 rounded-full
-                             font-bold text-lg cursor-pointer transition-all hover:scale-110 hover:shadow-[0_0_40px_rgba(6,182,212,0.8)]"
-                style={{
-                  animation: `float ${2 + index * 0.2}s ease-in-out infinite`,
-                }}
-                onMouseEnter={() => setHoveredSkill(index)}
-                onMouseLeave={() => setHoveredSkill(null)}
+                key={index}
+                className="bg-slate-50 p-10 rounded-3xl hover:shadow-2xl transition-all group border-2 border-gray-200 hover:border-slate-900 relative overflow-hidden"
               >
-                <span className="text-cyan-400">{skill.name}</span>
+                {/* Number Badge */}
+                <div className="absolute top-8 right-8 w-16 h-16 bg-slate-900 rounded-2xl flex items-center justify-center opacity-10 group-hover:opacity-20 transition-opacity">
+                  <span className="text-4xl font-black text-white">
+                    {service.number}
+                  </span>
+                </div>
+
+                {/* Content */}
+                <div className="relative">
+                  <div className="w-16 h-1.5 bg-slate-900 mb-6"></div>
+
+                  <div className="mb-2">
+                    <span className="text-sm font-bold text-slate-600 tracking-wider uppercase">
+                      {service.number}
+                    </span>
+                  </div>
+
+                  <h3 className="text-3xl font-bold text-gray-900 mb-4">
+                    {service.title}
+                  </h3>
+
+                  <p className="text-gray-600 mb-6 leading-relaxed text-lg">
+                    {service.description}
+                  </p>
+
+                  {/* Highlight Box */}
+                  <div className="bg-white border-2 border-slate-200 rounded-xl p-4 mb-6">
+                    <p className="text-sm font-semibold text-slate-900">
+                      ✨ {service.highlight}
+                    </p>
+                  </div>
+
+                  {/* Features List */}
+                  <ul className="space-y-3 mb-8">
+                    {service.features.map((feature, idx) => (
+                      <li
+                        key={idx}
+                        className="flex items-start gap-3 text-gray-700"
+                      >
+                        <CheckCircle2 className="w-5 h-5 text-slate-900 flex-shrink-0 mt-0.5" />
+                        <span className="font-medium">{feature}</span>
+                      </li>
+                    ))}
+                  </ul>
+
+                  {/* CTA Button */}
+                  <Link to="/pricing">
+                    <button className="w-full px-6 py-4 bg-slate-900 text-white rounded-xl font-bold hover:bg-slate-800 transition-all group-hover:shadow-lg flex items-center justify-center gap-2">
+                      <span>Vezi detalii și prețuri</span>
+                      <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+                    </button>
+                  </Link>
+                </div>
               </div>
             ))}
           </div>
-        </section>
 
-        {/* Projects Section */}
-        <section className="mb-24">
-          <div className="flex items-center gap-4 mb-8">
-            <div className="h-1 w-16 bg-gradient-to-r from-green-500 to-transparent"></div>
-            <h2 className="text-5xl font-black text-transparent bg-clip-text bg-gradient-to-r from-green-400 to-cyan-400">
-              PROIECTE
+          {/* Bottom CTA */}
+          <div className="text-center mt-16">
+            <p className="text-lg text-gray-600 mb-6">
+              Nu ești sigur ce ai nevoie? Hai să discutăm despre proiectul tău!
+            </p>
+            <Link to="/contact">
+              <button className="px-8 py-4 bg-white border-2 border-slate-900 text-slate-900 rounded-xl font-bold hover:bg-slate-900 hover:text-white transition-all">
+                Programează o consultanță gratuită
+              </button>
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* Testimonials */}
+      <section id="testimonials" className="py-20 lg:py-32 bg-slate-50">
+        <div className="max-w-7xl mx-auto px-6 lg:px-8">
+          <div className="text-center mb-16">
+            <h2 className="text-4xl lg:text-5xl font-bold text-gray-900 mb-4">
+              Ce spun clienții
             </h2>
-            <div className="h-1 flex-1 bg-gradient-to-r from-cyan-500 to-transparent"></div>
+            <p className="text-xl text-gray-600">
+              Feedback real de la parteneri de încredere
+            </p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            {projects.map((project) => (
+            {testimonials.map((testimonial, index) => (
               <div
-                key={project.id}
-                className={`bg-gray-800 bg-opacity-50 backdrop-blur-sm p-8 rounded-2xl 
-                             border-2 transition-all cursor-pointer group
-                             ${
-                               hoveredProject === project.id
-                                 ? project.glow
-                                 : "border-gray-700"
-                             }`}
-                style={{
-                  transform:
-                    hoveredProject === project.id
-                      ? "translateY(-10px)"
-                      : "translateY(0)",
-                }}
-                onMouseEnter={() => setHoveredProject(project.id)}
-                onMouseLeave={() => setHoveredProject(null)}
+                key={index}
+                className="bg-white p-8 rounded-2xl shadow-sm border border-gray-200"
               >
-                <div className="flex justify-between items-start mb-4">
-                  <h3
-                    className={`text-3xl font-bold bg-gradient-to-r ${project.gradient} bg-clip-text text-transparent`}
-                  >
-                    {project.title}
-                  </h3>
-                  <ExternalLink className="w-6 h-6 text-cyan-400 group-hover:rotate-45 transition-transform" />
-                </div>
-
-                <p className="text-gray-300 text-lg mb-6 leading-relaxed">
-                  {project.description}
-                </p>
-
-                <div className="flex flex-wrap gap-3">
-                  {project.tech.map((tech) => (
-                    <span
-                      key={tech}
-                      className="px-4 py-2 bg-gray-900 border border-gray-700 rounded-lg text-sm font-semibold text-cyan-400"
+                <div className="flex gap-1 mb-4">
+                  {[...Array(testimonial.rating)].map((_, i) => (
+                    <svg
+                      key={i}
+                      className="w-5 h-5 text-yellow-400 fill-current"
+                      viewBox="0 0 20 20"
                     >
-                      {tech}
-                    </span>
+                      <path d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z" />
+                    </svg>
                   ))}
                 </div>
-
-                {/* Glow effect on hover */}
-                <div
-                  className={`absolute inset-0 bg-gradient-to-r ${project.gradient} rounded-2xl blur-xl opacity-0 
-                              group-hover:opacity-20 transition-opacity -z-10`}
-                ></div>
+                <p className="text-gray-700 text-lg mb-6 leading-relaxed italic">
+                  "{testimonial.content}"
+                </p>
+                <div>
+                  <div className="font-bold text-gray-900">
+                    {testimonial.name}
+                  </div>
+                  <div className="text-gray-600 text-sm">
+                    {testimonial.role}
+                  </div>
+                </div>
               </div>
             ))}
           </div>
-        </section>
+        </div>
+      </section>
 
-        {/* Contact Section */}
-{/* Contact Section */}
-<section className="text-center py-20">
-  <div className="relative inline-block mb-8">
-    <h2 className="text-5xl font-black text-transparent bg-clip-text bg-gradient-to-r from-pink-400 to-cyan-400 mb-4">
-      HAI SĂ COLABORĂM!
-    </h2>
-    <div className="absolute -inset-2 bg-gradient-to-r from-pink-500 to-cyan-500 rounded-lg blur-lg opacity-30 animate-pulse"></div>
-  </div>
-
-  <p className="text-2xl text-gray-300 mb-10 max-w-2xl mx-auto">
-    Vrei să creez ceva pentru tine?{" "}
-    <span className="text-cyan-400">Sunt la un click!</span> 🚀
-  </p>
-
-  {/* Butoane Contact + Pricing */}
-  <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-    <Link to="/contact">
-      <button
-        className="relative px-12 py-5 bg-gradient-to-r from-cyan-500 to-purple-500 
-                   font-black text-2xl rounded-full overflow-hidden group
-                   hover:shadow-[0_0_50px_rgba(6,182,212,0.8)] transition-all hover:scale-110"
-      >
-        <span className="relative z-10">CONTACTEAZĂ-MĂ</span>
-        <div
-          className="absolute inset-0 bg-gradient-to-r from-purple-500 to-cyan-500 opacity-0 
-                      group-hover:opacity-100 transition-opacity"
-        ></div>
-      </button>
-    </Link>
-
-    <Link to="/pricing">
-      <button
-        className="relative px-12 py-5 bg-gradient-to-r from-green-500 to-emerald-500 
-                   font-black text-2xl rounded-full overflow-hidden group
-                   hover:shadow-[0_0_50px_rgba(16,185,129,0.8)] transition-all hover:scale-110"
-      >
-        <span className="relative z-10">VEZI PREȚURI 💳</span>
-        <div
-          className="absolute inset-0 bg-gradient-to-r from-emerald-500 to-green-500 opacity-0 
-                      group-hover:opacity-100 transition-opacity"
-        ></div>
-      </button>
-    </Link>
-  </div>
-</section>
-
-        {/* Footer */}
-        <footer className="text-center py-8 border-t border-gray-800">
-          <p className="text-gray-500 text-lg">
-            Design & code by Arcadii Florean
+      {/* CTA Section */}
+      <section id="contact" className="py-20 lg:py-32 bg-slate-900">
+        <div className="max-w-4xl mx-auto px-6 lg:px-8 text-center">
+          <h2 className="text-4xl lg:text-5xl font-bold text-white mb-6">
+            Hai să construim ceva împreună
+          </h2>
+          <p className="text-xl text-slate-300 mb-10 leading-relaxed">
+            Ai un proiect în minte? Sunt gata să transformăm ideea ta în
+            realitate. Contactează-mă pentru o discuție fără obligații.
           </p>
-          <p className="text-gray-600 text-sm mt-2">
-            © Toate drepturile rezervate
-          </p>
-        </footer>
-      </div>
+          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <Link to="/contact">
+              <button className="px-10 py-4 bg-white text-slate-900 rounded-lg font-bold text-lg hover:bg-gray-100 transition-all">
+                Trimite un mesaj
+              </button>
+            </Link>
+            <a href="mailto:webFlorean@gmail.com">
+              <button className="px-10 py-4 bg-transparent border-2 border-white text-white rounded-lg font-bold text-lg hover:bg-white hover:text-slate-900 transition-all">
+                Email direct
+              </button>
+            </a>
+          </div>
+        </div>
+      </section>
 
-      <style>{`
-        @keyframes float {
-          0%, 100% { transform: translateY(0px); }
-          50% { transform: translateY(-10px); }
-        }
-      `}</style>
+      {/* Footer */}
+      <footer className="bg-white border-t border-gray-200 py-12">
+        <div className="max-w-7xl mx-auto px-6 lg:px-8">
+          <div className="flex flex-col md:flex-row justify-between items-center gap-6">
+            <div className="flex items-center space-x-2">
+              <div className="w-10 h-10 bg-slate-900 rounded-lg flex items-center justify-center">
+                <span className="text-white font-bold text-xl">AF</span>
+              </div>
+              <span className="text-lg font-bold text-gray-900">
+                Arcadii Florean
+              </span>
+            </div>
+
+            <div className="flex gap-6">
+              {[
+                {
+                  Icon: Github,
+                  link: "https://github.com/ArcadiiFlorean",
+                  label: "GitHub",
+                },
+                {
+                  Icon: Linkedin,
+                  link: "https://www.linkedin.com/in/arcadii-florean-6a9584397/",
+                  label: "LinkedIn",
+                },
+                {
+                  Icon: Facebook,
+                  link: "https://www.facebook.com/arcadii.florean",
+                  label: "Facebook",
+                },
+                {
+                  Icon: MessageCircle,
+                  link: "https://wa.me/447454185152",
+                  label: "WhatsApp",
+                },
+              ].map(({ Icon, link, label }) => (
+                <a
+                  key={label}
+                  href={link}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="p-2 text-gray-600 hover:text-gray-900 transition-colors"
+                  aria-label={label}
+                >
+                  <Icon className="w-5 h-5" />
+                </a>
+              ))}
+            </div>
+
+            <div className="text-gray-600 text-sm">
+              © 2024 Arcadii Florean. All rights reserved.
+            </div>
+          </div>
+        </div>
+      </footer>
     </div>
   );
 }
 
-export default App;
+export default ProfessionalPortfolio;
