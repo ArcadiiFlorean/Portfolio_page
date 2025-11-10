@@ -852,25 +852,7 @@ function PricingPage() {
         </div>
       </section>
 
-      {/* Footer */}
-      <footer className="bg-[#0a0a0a] border-t border-red-500/20 py-12 relative">
-        <div className="max-w-7xl mx-auto px-6 lg:px-8">
-          <div className="flex flex-col md:flex-row justify-between items-center gap-6">
-            <Link to="/" className="flex items-center space-x-2">
-              <div className="w-10 h-10 bg-gradient-to-br from-red-500 to-orange-500 rounded-lg flex items-center justify-center shadow-[0_0_20px_rgba(239,68,68,0.5)] transform hover:rotate-12 transition-transform duration-300">
-                <span className="text-white font-bold text-xl">AF</span>
-              </div>
-              <span className="text-lg font-bold bg-gradient-to-r from-red-400 to-orange-400 bg-clip-text text-transparent">
-                Arcadii Florean
-              </span>
-            </Link>
-
-            <div className="text-gray-400 text-sm">
-              © 2024 Arcadii Florean. All rights reserved.
-            </div>
-          </div>
-        </div>
-      </footer>
+     
     </div>
   );
 }
