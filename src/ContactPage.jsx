@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 import {
   Mail,
@@ -17,7 +17,7 @@ import {
   Zap,
 } from "lucide-react";
 
-function ContactPageNeon() {
+function ContactPageModern() {
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -28,6 +28,42 @@ function ContactPageNeon() {
   const [errors, setErrors] = useState({});
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [scrollY, setScrollY] = useState(0);
+  const [isVisible, setIsVisible] = useState({});
+  const sectionRefs = useRef({});
+
+  // Parallax scroll effect
+  useEffect(() => {
+    const handleScroll = () => {
+      setScrollY(window.scrollY);
+    };
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  // Intersection Observer pentru animații la scroll
+  useEffect(() => {
+    const observers = [];
+    
+    Object.keys(sectionRefs.current).forEach((key) => {
+      const element = sectionRefs.current[key];
+      if (!element) return;
+
+      const observer = new IntersectionObserver(
+        ([entry]) => {
+          if (entry.isIntersecting) {
+            setIsVisible((prev) => ({ ...prev, [key]: true }));
+          }
+        },
+        { threshold: 0.1 }
+      );
+
+      observer.observe(element);
+      observers.push(observer);
+    });
+
+    return () => observers.forEach((observer) => observer.disconnect());
+  }, []);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -45,14 +81,14 @@ function ContactPageNeon() {
 
   const validateForm = () => {
     const newErrors = {};
-    if (!formData.name.trim()) newErrors.name = "Numele este obligatoriu";
+    if (!formData.name.trim()) newErrors.name = "Name is required";
     if (!formData.email.trim()) {
-      newErrors.email = "Email-ul este obligatoriu";
+      newErrors.email = "Email is required";
     } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
-      newErrors.email = "Email invalid";
+      newErrors.email = "Invalid email";
     }
-    if (!formData.subject.trim()) newErrors.subject = "Subiectul este obligatoriu";
-    if (!formData.message.trim()) newErrors.message = "Mesajul este obligatoriu";
+    if (!formData.subject.trim()) newErrors.subject = "Subject is required";
+    if (!formData.message.trim()) newErrors.message = "Message is required";
     return newErrors;
   };
 
@@ -82,115 +118,153 @@ function ContactPageNeon() {
       title: "Email",
       value: "webFlorean@gmail.com",
       link: "mailto:webFlorean@gmail.com",
-      description: "Răspund în 24h",
-      color: "cyan",
+      description: "Response within 24h",
+      color: "red",
     },
     {
       icon: Phone,
-      title: "Telefon",
+      title: "Phone",
       value: "+44 7454 185152",
       link: "tel:+447454185152",
-      description: "Luni - Vineri, 9:00 - 18:00",
-      color: "purple",
+      description: "Monday - Friday, 9:00 - 18:00",
+      color: "orange",
     },
-    {
-      icon: MapPin,
-      title: "Locație",
-      value: "London, UK",
-      link: "#",
-      description: "Remote & On-site",
-      color: "pink",
-    },
+
   ];
 
   const reasons = [
     {
       icon: Zap,
-      title: "Răspuns rapid",
-      description: "Răspund la toate mesajele în maximum 24 de ore",
+      title: "Fast Response",
+      description: "I respond to all messages within 1 hour maximum",
     },
     {
       icon: MessageSquare,
-      title: "Consultanță gratuită",
-      description: "Prima discuție este întotdeauna fără costuri",
+      title: "Free Consultation",
+      description: "The first discussion is always at no cost",
     },
     {
       icon: CheckCircle2,
-      title: "Fără obligații",
-      description: "Discutăm ideile tale fără niciun angajament",
+      title: "No Obligations",
+      description: "We discuss your ideas with no commitment",
     },
   ];
 
   return (
-    <div className="min-h-screen bg-gray-900 text-white overflow-hidden relative">
-      {/* Animated background grid */}
-      <div className="fixed inset-0 opacity-20">
+    <div className="min-h-screen bg-[#0a0a0a] text-white overflow-hidden relative">
+      {/* Animated background grid cu parallax */}
+      <div 
+        className="fixed inset-0 opacity-10"
+        style={{
+          transform: `translateY(${scrollY * 0.5}px)`,
+          transition: 'transform 0.1s ease-out'
+        }}
+      >
         <div
           className="absolute inset-0"
           style={{
             backgroundImage: `
-              linear-gradient(rgba(6, 182, 212, 0.3) 1px, transparent 1px),
-              linear-gradient(90deg, rgba(6, 182, 212, 0.3) 1px, transparent 1px)
+              linear-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px),
+              linear-gradient(90deg, rgba(255, 255, 255, 0.05) 1px, transparent 1px)
             `,
-            backgroundSize: "50px 50px",
+            backgroundSize: "60px 60px",
           }}
         ></div>
       </div>
 
-      {/* Glowing orbs */}
-      <div className="fixed top-20 right-20 w-96 h-96 bg-purple-600 rounded-full blur-3xl opacity-20 animate-pulse"></div>
+      {/* Red/Orange Glowing orbs cu parallax */}
+      <div 
+        className="fixed top-1/4 right-1/4 w-[600px] h-[600px] bg-gradient-to-br from-red-600 via-orange-600 to-red-700 rounded-full blur-[150px] opacity-30 animate-pulse"
+        style={{
+          transform: `translate(${scrollY * 0.15}px, ${scrollY * 0.2}px)`,
+          transition: 'transform 0.1s ease-out',
+          animationDuration: '4s'
+        }}
+      ></div>
       <div
-        className="fixed bottom-20 left-20 w-96 h-96 bg-cyan-600 rounded-full blur-3xl opacity-20 animate-pulse"
-        style={{ animationDelay: "1s" }}
+        className="fixed bottom-1/4 left-1/3 w-[400px] h-[400px] bg-gradient-to-tr from-orange-600 to-red-600 rounded-full blur-[120px] opacity-20 animate-pulse"
+        style={{ 
+          animationDelay: "2s",
+          animationDuration: '5s',
+          transform: `translate(${-scrollY * 0.1}px, ${-scrollY * 0.15}px)`,
+          transition: 'transform 0.1s ease-out'
+        }}
       ></div>
 
       <div className="relative z-10 max-w-7xl mx-auto px-6 lg:px-8 py-12">
-        {/* Navigation */}
-        <div className="flex justify-between items-center mb-12">
-          <Link to="/" className="flex items-center space-x-2">
-            <div className="w-10 h-10 bg-gradient-to-r from-cyan-500 to-purple-500 rounded-lg flex items-center justify-center shadow-[0_0_20px_rgba(6,182,212,0.6)]">
-              <span className="text-white font-bold text-xl">AF</span>
+        {/* Navigation cu animație */}
+        <div 
+          className={`flex justify-between items-center mb-12 transition-all duration-1000 ${
+            isVisible["nav"] !== false ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-10"
+          }`}
+          ref={(el) => {
+            if (el && !sectionRefs.current["nav"]) {
+              sectionRefs.current["nav"] = el;
+              setIsVisible((prev) => ({ ...prev, nav: true }));
+            }
+          }}
+        >
+          <Link to="/" className="flex items-center space-x-2 group">
+            <div className="relative">
+              <div className="w-10 h-10 bg-gradient-to-br from-red-500 to-orange-500 rounded-lg flex items-center justify-center shadow-[0_0_20px_rgba(239,68,68,0.5)] transform group-hover:rotate-12 group-hover:scale-110 transition-all duration-300">
+                <span className="text-white font-bold text-xl">AF</span>
+              </div>
+              <div className="absolute inset-0 bg-gradient-to-br from-red-500 to-orange-500 rounded-lg blur-md opacity-0 group-hover:opacity-50 transition-opacity"></div>
             </div>
-            <span className="text-xl font-bold bg-gradient-to-r from-cyan-400 to-purple-400 bg-clip-text text-transparent">
-              Arcadii Florean
+            <span className="text-xl font-bold bg-gradient-to-r from-red-400 to-orange-400 bg-clip-text text-transparent">
+              Prolio
             </span>
           </Link>
 
           <Link
             to="/"
-            className="inline-flex items-center gap-2 text-cyan-400 hover:text-cyan-300 font-medium transition-colors group"
+            className="inline-flex items-center gap-2 text-red-400 hover:text-red-300 font-medium transition-all group hover:scale-105"
           >
             <ArrowLeft className="w-5 h-5 group-hover:-translate-x-1 transition-transform" />
-            <span>Înapoi</span>
+            <span>Back</span>
           </Link>
         </div>
 
-        {/* Hero Section */}
-        <div className="text-center mb-16">
+        {/* Hero Section cu parallax */}
+        <div 
+          ref={(el) => (sectionRefs.current["hero"] = el)}
+          className={`text-center mb-16 transition-all duration-1000 ${
+            isVisible["hero"] ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
+          }`}
+          style={{
+            transform: `translateY(${scrollY * 0.1}px)`,
+          }}
+        >
           <div className="relative inline-block mb-6">
-            <h1 className="text-5xl lg:text-7xl font-black bg-gradient-to-r from-cyan-400 via-purple-400 to-pink-400 bg-clip-text text-transparent animate-pulse mb-4">
-              CONTACTEAZĂ-MĂ
+            <h1 className="text-5xl lg:text-7xl font-black bg-gradient-to-r from-red-400 via-orange-400 to-red-400 bg-clip-text text-transparent mb-4">
+              GET IN TOUCH
             </h1>
-            <div className="absolute -inset-1 bg-gradient-to-r from-cyan-500 to-purple-500 rounded-lg blur opacity-30"></div>
+            <div className="absolute -inset-1 bg-gradient-to-r from-red-500 to-orange-500 rounded-lg blur opacity-30"></div>
           </div>
 
           <p className="text-xl text-gray-300 max-w-2xl mx-auto mb-8">
-            Ai un proiect în minte sau vrei să colaborăm? <br />
-            <span className="text-cyan-400 font-semibold">
-              Hai să vorbim!
+            Have a project in mind or want to collaborate? <br />
+            <span className="text-red-400 font-semibold">
+              Let's talk!
             </span>{" "}
             🚀
           </p>
 
-          {/* Quick Stats */}
+          {/* Quick Stats cu animație stagger */}
           <div className="grid grid-cols-3 gap-6 max-w-2xl mx-auto">
             {[
-              { label: "Răspuns în", value: "24h", color: "cyan" },
-              { label: "Consultanță", value: "Gratuită", color: "purple" },
-              { label: "Satisfacție", value: "100%", color: "pink" },
+              { label: "Response in", value: "24h", color: "red" },
+              { label: "Consultation", value: "Free", color: "orange" },
+              { label: "Satisfaction", value: "100%", color: "red" },
             ].map((stat, index) => (
-              <div key={index} className="text-center">
-                <div className={`text-4xl font-bold text-${stat.color}-400 mb-1 animate-pulse`}>
+              <div 
+                key={index} 
+                className={`text-center transition-all duration-1000 ${
+                  isVisible["hero"] ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
+                }`}
+                style={{ transitionDelay: `${(index + 1) * 150}ms` }}
+              >
+                <div className={`text-4xl font-bold text-${stat.color}-400 mb-1`}>
                   {stat.value}
                 </div>
                 <div className="text-sm text-gray-400">{stat.label}</div>
@@ -201,14 +275,36 @@ function ContactPageNeon() {
 
         {/* Main Content */}
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
-          {/* Contact Form - 2 columns */}
-          <div className="lg:col-span-2">
-            <div className="bg-gray-800 bg-opacity-50 backdrop-blur-sm p-8 lg:p-10 rounded-2xl border-2 border-cyan-500 shadow-[0_0_50px_rgba(6,182,212,0.3)] hover:shadow-[0_0_80px_rgba(6,182,212,0.4)] transition-all">
-              <h2 className="text-3xl font-bold mb-2 bg-gradient-to-r from-cyan-400 to-purple-400 bg-clip-text text-transparent">
-                Trimite un mesaj
+          {/* Contact Form - 2 columns cu animație 3D */}
+          <div 
+            ref={(el) => (sectionRefs.current["form"] = el)}
+            className={`lg:col-span-2 transition-all duration-1000 ${
+              isVisible["form"] ? "opacity-100 translate-x-0" : "opacity-0 -translate-x-10"
+            }`}
+          >
+            <div 
+              className="bg-gray-800/50 backdrop-blur-sm p-8 lg:p-10 rounded-2xl border-2 border-red-500 shadow-[0_0_50px_rgba(239,68,68,0.3)] hover:shadow-[0_0_80px_rgba(239,68,68,0.4)] transition-all duration-500 hover:scale-[1.02]"
+              style={{ transformStyle: 'preserve-3d' }}
+              onMouseMove={(e) => {
+                const card = e.currentTarget;
+                const rect = card.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                const centerX = rect.width / 2;
+                const centerY = rect.height / 2;
+                const rotateX = (y - centerY) / 50;
+                const rotateY = (centerX - x) / 50;
+                card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale(1.02)`;
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg) scale(1)';
+              }}
+            >
+              <h2 className="text-3xl font-bold mb-2 bg-gradient-to-r from-red-400 to-orange-400 bg-clip-text text-transparent">
+                Send a Message
               </h2>
               <p className="text-gray-300 mb-8">
-                Completează formularul și îți voi răspunde în cel mai scurt timp ⚡
+                Fill out the form and I'll get back to you as soon as possible ⚡
               </p>
 
               {isSubmitted && (
@@ -217,10 +313,10 @@ function ContactPageNeon() {
                     <CheckCircle2 className="w-6 h-6 text-green-400 flex-shrink-0 mt-0.5" />
                     <div>
                       <p className="font-bold text-green-400 mb-1">
-                        ✅ Mesaj trimis cu succes!
+                        ✅ Message sent successfully!
                       </p>
                       <p className="text-sm text-green-300">
-                        Îți voi răspunde în maximum 24 de ore. Verifică și folderul de spam.
+                        I'll respond within 24 hours. Please check your spam folder too.
                       </p>
                     </div>
                   </div>
@@ -232,7 +328,7 @@ function ContactPageNeon() {
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div>
                     <label className="block text-sm font-semibold text-gray-300 mb-2">
-                      Nume complet *
+                      Full Name *
                     </label>
                     <input
                       type="text"
@@ -241,11 +337,11 @@ function ContactPageNeon() {
                       onChange={handleChange}
                       className={`w-full px-4 py-3 bg-gray-900 border-2 ${
                         errors.name ? "border-red-500" : "border-gray-700"
-                      } rounded-lg text-white placeholder-gray-500 focus:outline-none focus:border-cyan-500 transition-colors shadow-inner`}
-                      placeholder="Ion Popescu"
+                      } rounded-lg text-white placeholder-gray-500 focus:outline-none focus:border-red-500 transition-all shadow-inner hover:border-red-600 focus:scale-[1.02]`}
+                      placeholder="John Doe"
                     />
                     {errors.name && (
-                      <p className="mt-2 text-sm text-red-400 font-medium">
+                      <p className="mt-2 text-sm text-red-400 font-medium animate-pulse">
                         {errors.name}
                       </p>
                     )}
@@ -262,11 +358,11 @@ function ContactPageNeon() {
                       onChange={handleChange}
                       className={`w-full px-4 py-3 bg-gray-900 border-2 ${
                         errors.email ? "border-red-500" : "border-gray-700"
-                      } rounded-lg text-white placeholder-gray-500 focus:outline-none focus:border-cyan-500 transition-colors shadow-inner`}
-                      placeholder="ion@example.com"
+                      } rounded-lg text-white placeholder-gray-500 focus:outline-none focus:border-red-500 transition-all shadow-inner hover:border-red-600 focus:scale-[1.02]`}
+                      placeholder="john@example.com"
                     />
                     {errors.email && (
-                      <p className="mt-2 text-sm text-red-400 font-medium">
+                      <p className="mt-2 text-sm text-red-400 font-medium animate-pulse">
                         {errors.email}
                       </p>
                     )}
@@ -276,7 +372,7 @@ function ContactPageNeon() {
                 {/* Subject */}
                 <div>
                   <label className="block text-sm font-semibold text-gray-300 mb-2">
-                    Subiect *
+                    Subject *
                   </label>
                   <input
                     type="text"
@@ -285,11 +381,11 @@ function ContactPageNeon() {
                     onChange={handleChange}
                     className={`w-full px-4 py-3 bg-gray-900 border-2 ${
                       errors.subject ? "border-red-500" : "border-gray-700"
-                    } rounded-lg text-white placeholder-gray-500 focus:outline-none focus:border-cyan-500 transition-colors shadow-inner`}
-                    placeholder="Despre ce vrei să vorbim?"
+                    } rounded-lg text-white placeholder-gray-500 focus:outline-none focus:border-red-500 transition-all shadow-inner hover:border-red-600 focus:scale-[1.02]`}
+                    placeholder="What would you like to discuss?"
                   />
                   {errors.subject && (
-                    <p className="mt-2 text-sm text-red-400 font-medium">
+                    <p className="mt-2 text-sm text-red-400 font-medium animate-pulse">
                       {errors.subject}
                     </p>
                   )}
@@ -298,7 +394,7 @@ function ContactPageNeon() {
                 {/* Message */}
                 <div>
                   <label className="block text-sm font-semibold text-gray-300 mb-2">
-                    Mesaj *
+                    Message *
                   </label>
                   <textarea
                     name="message"
@@ -307,11 +403,11 @@ function ContactPageNeon() {
                     rows="6"
                     className={`w-full px-4 py-3 bg-gray-900 border-2 ${
                       errors.message ? "border-red-500" : "border-gray-700"
-                    } rounded-lg text-white placeholder-gray-500 focus:outline-none focus:border-cyan-500 transition-colors resize-none shadow-inner`}
-                    placeholder="Descrie-mi pe scurt proiectul tău sau întrebările pe care le ai..."
+                    } rounded-lg text-white placeholder-gray-500 focus:outline-none focus:border-red-500 transition-all resize-none shadow-inner hover:border-red-600 focus:scale-[1.02]`}
+                    placeholder="Briefly describe your project or the questions you have..."
                   ></textarea>
                   {errors.message && (
-                    <p className="mt-2 text-sm text-red-400 font-medium">
+                    <p className="mt-2 text-sm text-red-400 font-medium animate-pulse">
                       {errors.message}
                     </p>
                   )}
@@ -321,48 +417,59 @@ function ContactPageNeon() {
                 <button
                   type="submit"
                   disabled={isSubmitting}
-                  className="w-full px-8 py-4 bg-gradient-to-r from-cyan-500 to-purple-500 font-bold text-lg rounded-lg
-                           hover:shadow-[0_0_40px_rgba(6,182,212,0.8)] transition-all hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed
+                  className="w-full px-8 py-4 bg-gradient-to-r from-red-500 to-orange-500 font-bold text-lg rounded-lg
+                           hover:shadow-[0_0_40px_rgba(239,68,68,0.8)] transition-all hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed
                            flex items-center justify-center gap-2 group relative overflow-hidden"
                 >
-                  <div className="absolute inset-0 bg-gradient-to-r from-purple-500 to-cyan-500 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                  <div className="absolute inset-0 bg-gradient-to-r from-orange-500 to-red-500 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
                   {isSubmitting ? (
                     <>
                       <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
-                      <span className="relative z-10">Se trimite...</span>
+                      <span className="relative z-10">Sending...</span>
                     </>
                   ) : (
                     <>
-                      <span className="relative z-10">Trimite mesajul</span>
+                      <span className="relative z-10">Send Message</span>
                       <Send className="w-5 h-5 relative z-10 group-hover:translate-x-1 transition-transform" />
                     </>
                   )}
                 </button>
 
                 <p className="text-sm text-gray-400 text-center">
-                  🔒 Respectăm confidențialitatea datelor tale
+                  🔒 We respect your data privacy
                 </p>
               </form>
             </div>
           </div>
 
-          {/* Sidebar */}
-          <div className="space-y-6">
+          {/* Sidebar cu animații stagger */}
+          <div 
+            ref={(el) => (sectionRefs.current["sidebar"] = el)}
+            className="space-y-6"
+          >
             {/* Contact Info */}
-            <div>
-              <h3 className="text-2xl font-bold mb-6 bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">
-                Informații de contact
+            <div className={`transition-all duration-1000 ${
+              isVisible["sidebar"] ? "opacity-100 translate-x-0" : "opacity-0 translate-x-10"
+            }`}>
+              <h3 className="text-2xl font-bold mb-6 bg-gradient-to-r from-orange-400 to-red-400 bg-clip-text text-transparent">
+                Contact Information
               </h3>
               <div className="space-y-4">
                 {contactInfo.map((info, index) => (
                   <a
                     key={index}
                     href={info.link}
-                    className={`block bg-gray-800 bg-opacity-50 backdrop-blur-sm p-6 rounded-xl border-2 border-${info.color}-500 
-                             hover:shadow-[0_0_30px_rgba(6,182,212,0.3)] transition-all group`}
+                    className={`block bg-gray-800/50 backdrop-blur-sm p-6 rounded-xl border-2 border-${info.color}-500 
+                             hover:shadow-[0_0_30px_rgba(239,68,68,0.3)] transition-all duration-500 group hover:scale-105 hover:-translate-y-2 ${
+                      isVisible["sidebar"] ? "opacity-100 translate-x-0" : "opacity-0 translate-x-10"
+                    }`}
+                    style={{ 
+                      transitionDelay: `${index * 100}ms`,
+                      transformStyle: 'preserve-3d'
+                    }}
                   >
                     <div className="flex items-start gap-4">
-                      <div className={`w-12 h-12 bg-${info.color}-500 bg-opacity-20 border-2 border-${info.color}-500 rounded-lg flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform`}>
+                      <div className={`w-12 h-12 bg-${info.color}-500/20 border-2 border-${info.color}-500 rounded-lg flex items-center justify-center flex-shrink-0 group-hover:scale-110 group-hover:rotate-12 transition-all duration-300`}>
                         <info.icon className={`w-6 h-6 text-${info.color}-400`} />
                       </div>
                       <div>
@@ -382,30 +489,43 @@ function ContactPageNeon() {
               </div>
             </div>
 
-            {/* Why Contact */}
-            <div className="bg-gradient-to-br from-purple-900 to-pink-900 bg-opacity-30 p-8 rounded-2xl border-2 border-purple-500 shadow-[0_0_40px_rgba(168,85,247,0.3)]">
-              <h3 className="text-2xl font-bold mb-6 text-purple-400">
-                De ce să mă contactezi?
+            {/* Why Contact cu animație 3D */}
+            <div 
+              className={`bg-gradient-to-br from-red-900/30 to-orange-900/30 p-8 rounded-2xl border-2 border-red-500/50 shadow-[0_0_40px_rgba(239,68,68,0.3)] transition-all duration-1000 hover:scale-105 hover:shadow-[0_0_60px_rgba(239,68,68,0.5)] ${
+                isVisible["sidebar"] ? "opacity-100 translate-x-0" : "opacity-0 translate-x-10"
+              }`}
+              style={{ 
+                transitionDelay: '300ms',
+                transformStyle: 'preserve-3d'
+              }}
+            >
+              <h3 className="text-2xl font-bold mb-6 text-red-400">
+                Why Contact Me?
               </h3>
               <div className="space-y-4">
                 {reasons.map((reason, index) => (
-                  <div key={index} className="flex items-start gap-3">
-                    <div className="w-8 h-8 bg-purple-500 bg-opacity-20 border border-purple-500 rounded-lg flex items-center justify-center flex-shrink-0">
-                      <reason.icon className="w-4 h-4 text-purple-400" />
+                  <div key={index} className="flex items-start gap-3 transform transition-all duration-300 hover:translate-x-2">
+                    <div className="w-8 h-8 bg-red-500/20 border border-red-500 rounded-lg flex items-center justify-center flex-shrink-0 transition-transform hover:scale-110 hover:rotate-12">
+                      <reason.icon className="w-4 h-4 text-red-400" />
                     </div>
                     <div>
                       <h4 className="font-bold text-white mb-1">{reason.title}</h4>
-                      <p className="text-sm text-purple-200">{reason.description}</p>
+                      <p className="text-sm text-gray-300">{reason.description}</p>
                     </div>
                   </div>
                 ))}
               </div>
             </div>
 
-            {/* Social Links */}
-            <div className="bg-gray-800 bg-opacity-50 backdrop-blur-sm p-8 rounded-2xl border-2 border-cyan-500 shadow-[0_0_40px_rgba(6,182,212,0.2)]">
-              <h3 className="text-xl font-bold text-cyan-400 mb-4">
-                Conectează-te cu mine
+            {/* Social Links cu animații */}
+            <div 
+              className={`bg-gray-800/50 backdrop-blur-sm p-8 rounded-2xl border-2 border-orange-500 shadow-[0_0_40px_rgba(251,146,60,0.2)] transition-all duration-1000 hover:shadow-[0_0_60px_rgba(251,146,60,0.4)] ${
+                isVisible["sidebar"] ? "opacity-100 translate-x-0" : "opacity-0 translate-x-10"
+              }`}
+              style={{ transitionDelay: '400ms' }}
+            >
+              <h3 className="text-xl font-bold text-orange-400 mb-4">
+                Connect With Me
               </h3>
               <div className="flex flex-wrap gap-3">
                 {[
@@ -420,28 +540,33 @@ function ContactPageNeon() {
                     href={link}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="p-3 bg-gray-900 border-2 border-purple-500 rounded-lg hover:bg-gray-800 
-                             transition-all hover:scale-110 hover:shadow-[0_0_25px_rgba(168,85,247,0.6)] group"
+                    className="p-3 bg-gray-900 border-2 border-orange-500 rounded-lg hover:bg-gray-800 
+                             transition-all duration-300 hover:scale-110 hover:-translate-y-2 hover:shadow-[0_0_25px_rgba(251,146,60,0.6)] group"
                     aria-label={label}
                     title={label}
                   >
-                    <Icon className="w-5 h-5 text-purple-400 group-hover:text-cyan-400 transition-colors" />
+                    <Icon className="w-5 h-5 text-orange-400 group-hover:text-red-400 transition-colors group-hover:rotate-12" />
                   </a>
                 ))}
               </div>
             </div>
 
-            {/* Availability */}
-            <div className="bg-gradient-to-r from-green-500 to-emerald-500 p-6 rounded-2xl shadow-[0_0_30px_rgba(16,185,129,0.4)]">
+            {/* Availability cu animație pulsantă */}
+            <div 
+              className={`bg-gradient-to-r from-green-500 to-emerald-500 p-6 rounded-2xl shadow-[0_0_30px_rgba(16,185,129,0.4)] transition-all duration-1000 hover:scale-105 hover:shadow-[0_0_50px_rgba(16,185,129,0.6)] ${
+                isVisible["sidebar"] ? "opacity-100 translate-x-0" : "opacity-0 translate-x-10"
+              }`}
+              style={{ transitionDelay: '500ms' }}
+            >
               <div className="flex items-center gap-3 mb-2">
                 <div className="w-3 h-3 bg-white rounded-full animate-pulse"></div>
                 <h3 className="text-xl font-bold text-white">
-                  Disponibil pentru proiecte noi!
+                  Available for new projects!
                 </h3>
               </div>
               <p className="text-green-100">
-                Sunt deschis pentru colaborări și proiecte freelance. Hai să
-                creăm ceva extraordinar împreună! 🚀
+                I'm open for collaborations and freelance projects. Let's
+                create something extraordinary together! 🚀
               </p>
             </div>
           </div>
@@ -451,4 +576,4 @@ function ContactPageNeon() {
   );
 }
 
-export default ContactPageNeon;
+export default ContactPageModern;
