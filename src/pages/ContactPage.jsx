@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
+import emailjs from "@emailjs/browser";
 import {
   Mail,
   Phone,
@@ -24,7 +25,9 @@ function ContactPageModern() {
     subject: "",
     message: "",
   });
-
+  useEffect(() => {
+    emailjs.init("i21Nt1ALU89Sxazgv"); // public key-ul tău
+  }, []);
   const [errors, setErrors] = useState({});
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -44,7 +47,7 @@ function ContactPageModern() {
   // Intersection Observer pentru animații la scroll
   useEffect(() => {
     const observers = [];
-    
+
     Object.keys(sectionRefs.current).forEach((key) => {
       const element = sectionRefs.current[key];
       if (!element) return;
@@ -98,20 +101,45 @@ function ContactPageModern() {
 
     if (Object.keys(newErrors).length === 0) {
       setIsSubmitting(true);
-      setTimeout(() => {
-        console.log("Form submitted:", formData);
-        setIsSubmitted(true);
-        setIsSubmitting(false);
-        setTimeout(() => {
+
+      console.log("🚀 Sending emails...");
+
+      // ⭐ EMAIL 1: Către TINE (notificare cu detalii)
+      emailjs
+        .send(
+          "service_xp7ck6c", // Service ID
+          "template_e0vg7js", // Template-ul tău VECHI (notificare către tine)
+          formData,
+          "i21Nt1ALU89Sxazgv" // Public Key
+        )
+        .then((response) => {
+          console.log("✅ Email sent to YOU!", response);
+
+          // ⭐ EMAIL 2: Către CLIENT (auto-reply)
+          return emailjs.send(
+            "service_xp7ck6c", // Același Service ID
+            "template_op9lvld", // ⭐⭐⭐ ÎNLOCUIEȘTE cu ID-ul template-ului NOU! ⭐⭐⭐
+            formData,
+            "i21Nt1ALU89Sxazgv" // Același Public Key
+          );
+        })
+        .then((response) => {
+          console.log("✅ Auto-reply sent to CLIENT!", response);
+          setIsSubmitted(true);
+          setIsSubmitting(false);
           setFormData({ name: "", email: "", subject: "", message: "" });
-          setIsSubmitted(false);
-        }, 5000);
-      }, 1000);
+        })
+        .catch((error) => {
+          console.error("❌ Email error:", error);
+          console.error("❌ Error details:", error.text);
+          setIsSubmitting(false);
+          alert("Something went wrong. Please try again later.");
+        });
     } else {
+      console.log("❌ Validation errors:", newErrors);
       setErrors(newErrors);
     }
   };
-
   const contactInfo = [
     {
       icon: Mail,
@@ -129,7 +157,6 @@ function ContactPageModern() {
       description: "Monday - Friday, 9:00 - 18:00",
       color: "orange",
     },
-
   ];
 
   const reasons = [
@@ -153,11 +180,11 @@ function ContactPageModern() {
   return (
     <div className="min-h-screen bg-[#0a0a0a] text-white overflow-hidden relative">
       {/* Animated background grid cu parallax */}
-      <div 
+      <div
         className="fixed inset-0 opacity-10"
         style={{
           transform: `translateY(${scrollY * 0.5}px)`,
-          transition: 'transform 0.1s ease-out'
+          transition: "transform 0.1s ease-out",
         }}
       >
         <div
@@ -173,29 +200,31 @@ function ContactPageModern() {
       </div>
 
       {/* Red/Orange Glowing orbs cu parallax */}
-      <div 
+      <div
         className="fixed top-1/4 right-1/4 w-[600px] h-[600px] bg-gradient-to-br from-red-600 via-orange-600 to-red-700 rounded-full blur-[150px] opacity-30 animate-pulse"
         style={{
           transform: `translate(${scrollY * 0.15}px, ${scrollY * 0.2}px)`,
-          transition: 'transform 0.1s ease-out',
-          animationDuration: '4s'
+          transition: "transform 0.1s ease-out",
+          animationDuration: "4s",
         }}
       ></div>
       <div
         className="fixed bottom-1/4 left-1/3 w-[400px] h-[400px] bg-gradient-to-tr from-orange-600 to-red-600 rounded-full blur-[120px] opacity-20 animate-pulse"
-        style={{ 
+        style={{
           animationDelay: "2s",
-          animationDuration: '5s',
+          animationDuration: "5s",
           transform: `translate(${-scrollY * 0.1}px, ${-scrollY * 0.15}px)`,
-          transition: 'transform 0.1s ease-out'
+          transition: "transform 0.1s ease-out",
         }}
       ></div>
 
       <div className="relative z-10 max-w-7xl mx-auto px-6 lg:px-8 py-12">
         {/* Navigation cu animație */}
-        <div 
+        <div
           className={`flex justify-between items-center mb-12 transition-all duration-1000 ${
-            isVisible["nav"] !== false ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-10"
+            isVisible["nav"] !== false
+              ? "opacity-100 translate-y-0"
+              : "opacity-0 -translate-y-10"
           }`}
           ref={(el) => {
             if (el && !sectionRefs.current["nav"]) {
@@ -206,9 +235,6 @@ function ContactPageModern() {
         >
           <Link to="/" className="flex items-center space-x-2 group">
             <div className="relative">
-              <div className="w-10 h-10 bg-gradient-to-br from-red-500 to-orange-500 rounded-lg flex items-center justify-center shadow-[0_0_20px_rgba(239,68,68,0.5)] transform group-hover:rotate-12 group-hover:scale-110 transition-all duration-300">
-                <span className="text-white font-bold text-xl">AF</span>
-              </div>
               <div className="absolute inset-0 bg-gradient-to-br from-red-500 to-orange-500 rounded-lg blur-md opacity-0 group-hover:opacity-50 transition-opacity"></div>
             </div>
             <span className="text-xl font-bold bg-gradient-to-r from-red-400 to-orange-400 bg-clip-text text-transparent">
@@ -226,10 +252,12 @@ function ContactPageModern() {
         </div>
 
         {/* Hero Section cu parallax */}
-        <div 
+        <div
           ref={(el) => (sectionRefs.current["hero"] = el)}
           className={`text-center mb-16 transition-all duration-1000 ${
-            isVisible["hero"] ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
+            isVisible["hero"]
+              ? "opacity-100 translate-y-0"
+              : "opacity-0 translate-y-10"
           }`}
           style={{
             transform: `translateY(${scrollY * 0.1}px)`,
@@ -244,10 +272,7 @@ function ContactPageModern() {
 
           <p className="text-xl text-gray-300 max-w-2xl mx-auto mb-8">
             Have a project in mind or want to collaborate? <br />
-            <span className="text-red-400 font-semibold">
-              Let's talk!
-            </span>{" "}
-            🚀
+            <span className="text-red-400 font-semibold">Let's talk!</span> 🚀
           </p>
 
           {/* Quick Stats cu animație stagger */}
@@ -257,14 +282,18 @@ function ContactPageModern() {
               { label: "Consultation", value: "Free", color: "orange" },
               { label: "Satisfaction", value: "100%", color: "red" },
             ].map((stat, index) => (
-              <div 
-                key={index} 
+              <div
+                key={index}
                 className={`text-center transition-all duration-1000 ${
-                  isVisible["hero"] ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
+                  isVisible["hero"]
+                    ? "opacity-100 translate-y-0"
+                    : "opacity-0 translate-y-10"
                 }`}
                 style={{ transitionDelay: `${(index + 1) * 150}ms` }}
               >
-                <div className={`text-4xl font-bold text-${stat.color}-400 mb-1`}>
+                <div
+                  className={`text-4xl font-bold text-${stat.color}-400 mb-1`}
+                >
                   {stat.value}
                 </div>
                 <div className="text-sm text-gray-400">{stat.label}</div>
@@ -276,15 +305,17 @@ function ContactPageModern() {
         {/* Main Content */}
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
           {/* Contact Form - 2 columns cu animație 3D */}
-          <div 
+          <div
             ref={(el) => (sectionRefs.current["form"] = el)}
             className={`lg:col-span-2 transition-all duration-1000 ${
-              isVisible["form"] ? "opacity-100 translate-x-0" : "opacity-0 -translate-x-10"
+              isVisible["form"]
+                ? "opacity-100 translate-x-0"
+                : "opacity-0 -translate-x-10"
             }`}
           >
-            <div 
+            <div
               className="bg-gray-800/50 backdrop-blur-sm p-8 lg:p-10 rounded-2xl border-2 border-red-500 shadow-[0_0_50px_rgba(239,68,68,0.3)] hover:shadow-[0_0_80px_rgba(239,68,68,0.4)] transition-all duration-500 hover:scale-[1.02]"
-              style={{ transformStyle: 'preserve-3d' }}
+              style={{ transformStyle: "preserve-3d" }}
               onMouseMove={(e) => {
                 const card = e.currentTarget;
                 const rect = card.getBoundingClientRect();
@@ -297,14 +328,16 @@ function ContactPageModern() {
                 card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale(1.02)`;
               }}
               onMouseLeave={(e) => {
-                e.currentTarget.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg) scale(1)';
+                e.currentTarget.style.transform =
+                  "perspective(1000px) rotateX(0deg) rotateY(0deg) scale(1)";
               }}
             >
               <h2 className="text-3xl font-bold mb-2 bg-gradient-to-r from-red-400 to-orange-400 bg-clip-text text-transparent">
                 Send a Message
               </h2>
               <p className="text-gray-300 mb-8">
-                Fill out the form and I'll get back to you as soon as possible ⚡
+                Fill out the form and I'll get back to you as soon as possible
+                ⚡
               </p>
 
               {isSubmitted && (
@@ -316,7 +349,8 @@ function ContactPageModern() {
                         ✅ Message sent successfully!
                       </p>
                       <p className="text-sm text-green-300">
-                        I'll respond within 24 hours. Please check your spam folder too.
+                        I'll respond within 24 hours. Please check your spam
+                        folder too.
                       </p>
                     </div>
                   </div>
@@ -443,14 +477,18 @@ function ContactPageModern() {
           </div>
 
           {/* Sidebar cu animații stagger */}
-          <div 
+          <div
             ref={(el) => (sectionRefs.current["sidebar"] = el)}
             className="space-y-6"
           >
             {/* Contact Info */}
-            <div className={`transition-all duration-1000 ${
-              isVisible["sidebar"] ? "opacity-100 translate-x-0" : "opacity-0 translate-x-10"
-            }`}>
+            <div
+              className={`transition-all duration-1000 ${
+                isVisible["sidebar"]
+                  ? "opacity-100 translate-x-0"
+                  : "opacity-0 translate-x-10"
+              }`}
+            >
               <h3 className="text-2xl font-bold mb-6 bg-gradient-to-r from-orange-400 to-red-400 bg-clip-text text-transparent">
                 Contact Information
               </h3>
@@ -459,24 +497,34 @@ function ContactPageModern() {
                   <a
                     key={index}
                     href={info.link}
-                    className={`block bg-gray-800/50 backdrop-blur-sm p-6 rounded-xl border-2 border-${info.color}-500 
+                    className={`block bg-gray-800/50 backdrop-blur-sm p-6 rounded-xl border-2 border-${
+                      info.color
+                    }-500 
                              hover:shadow-[0_0_30px_rgba(239,68,68,0.3)] transition-all duration-500 group hover:scale-105 hover:-translate-y-2 ${
-                      isVisible["sidebar"] ? "opacity-100 translate-x-0" : "opacity-0 translate-x-10"
-                    }`}
-                    style={{ 
+                               isVisible["sidebar"]
+                                 ? "opacity-100 translate-x-0"
+                                 : "opacity-0 translate-x-10"
+                             }`}
+                    style={{
                       transitionDelay: `${index * 100}ms`,
-                      transformStyle: 'preserve-3d'
+                      transformStyle: "preserve-3d",
                     }}
                   >
                     <div className="flex items-start gap-4">
-                      <div className={`w-12 h-12 bg-${info.color}-500/20 border-2 border-${info.color}-500 rounded-lg flex items-center justify-center flex-shrink-0 group-hover:scale-110 group-hover:rotate-12 transition-all duration-300`}>
-                        <info.icon className={`w-6 h-6 text-${info.color}-400`} />
+                      <div
+                        className={`w-12 h-12 bg-${info.color}-500/20 border-2 border-${info.color}-500 rounded-lg flex items-center justify-center flex-shrink-0 group-hover:scale-110 group-hover:rotate-12 transition-all duration-300`}
+                      >
+                        <info.icon
+                          className={`w-6 h-6 text-${info.color}-400`}
+                        />
                       </div>
                       <div>
                         <h4 className="font-bold text-white mb-1">
                           {info.title}
                         </h4>
-                        <p className={`text-${info.color}-400 font-semibold mb-1`}>
+                        <p
+                          className={`text-${info.color}-400 font-semibold mb-1`}
+                        >
                           {info.value}
                         </p>
                         <p className="text-sm text-gray-400">
@@ -490,13 +538,15 @@ function ContactPageModern() {
             </div>
 
             {/* Why Contact cu animație 3D */}
-            <div 
+            <div
               className={`bg-gradient-to-br from-red-900/30 to-orange-900/30 p-8 rounded-2xl border-2 border-red-500/50 shadow-[0_0_40px_rgba(239,68,68,0.3)] transition-all duration-1000 hover:scale-105 hover:shadow-[0_0_60px_rgba(239,68,68,0.5)] ${
-                isVisible["sidebar"] ? "opacity-100 translate-x-0" : "opacity-0 translate-x-10"
+                isVisible["sidebar"]
+                  ? "opacity-100 translate-x-0"
+                  : "opacity-0 translate-x-10"
               }`}
-              style={{ 
-                transitionDelay: '300ms',
-                transformStyle: 'preserve-3d'
+              style={{
+                transitionDelay: "300ms",
+                transformStyle: "preserve-3d",
               }}
             >
               <h3 className="text-2xl font-bold mb-6 text-red-400">
@@ -504,13 +554,20 @@ function ContactPageModern() {
               </h3>
               <div className="space-y-4">
                 {reasons.map((reason, index) => (
-                  <div key={index} className="flex items-start gap-3 transform transition-all duration-300 hover:translate-x-2">
+                  <div
+                    key={index}
+                    className="flex items-start gap-3 transform transition-all duration-300 hover:translate-x-2"
+                  >
                     <div className="w-8 h-8 bg-red-500/20 border border-red-500 rounded-lg flex items-center justify-center flex-shrink-0 transition-transform hover:scale-110 hover:rotate-12">
                       <reason.icon className="w-4 h-4 text-red-400" />
                     </div>
                     <div>
-                      <h4 className="font-bold text-white mb-1">{reason.title}</h4>
-                      <p className="text-sm text-gray-300">{reason.description}</p>
+                      <h4 className="font-bold text-white mb-1">
+                        {reason.title}
+                      </h4>
+                      <p className="text-sm text-gray-300">
+                        {reason.description}
+                      </p>
                     </div>
                   </div>
                 ))}
@@ -518,22 +575,44 @@ function ContactPageModern() {
             </div>
 
             {/* Social Links cu animații */}
-            <div 
+            <div
               className={`bg-gray-800/50 backdrop-blur-sm p-8 rounded-2xl border-2 border-orange-500 shadow-[0_0_40px_rgba(251,146,60,0.2)] transition-all duration-1000 hover:shadow-[0_0_60px_rgba(251,146,60,0.4)] ${
-                isVisible["sidebar"] ? "opacity-100 translate-x-0" : "opacity-0 translate-x-10"
+                isVisible["sidebar"]
+                  ? "opacity-100 translate-x-0"
+                  : "opacity-0 translate-x-10"
               }`}
-              style={{ transitionDelay: '400ms' }}
+              style={{ transitionDelay: "400ms" }}
             >
               <h3 className="text-xl font-bold text-orange-400 mb-4">
                 Connect With Me
               </h3>
               <div className="flex flex-wrap gap-3">
                 {[
-                  { Icon: Github, link: "https://github.com/ArcadiiFlorean", label: "GitHub" },
-                  { Icon: Linkedin, link: "https://www.linkedin.com/in/arcadii-florean-6a9584397/", label: "LinkedIn" },
-                  { Icon: Facebook, link: "https://www.facebook.com/arcadii.florean", label: "Facebook" },
-                  { Icon: Instagram, link: "https://www.instagram.com/arcadiiflorean/", label: "Instagram" },
-                  { Icon: MessageCircle, link: "https://wa.me/447454185152", label: "WhatsApp" },
+                  {
+                    Icon: Github,
+                    link: "https://github.com/ArcadiiFlorean",
+                    label: "GitHub",
+                  },
+                  {
+                    Icon: Linkedin,
+                    link: "https://www.linkedin.com/in/arcadii-florean-6a9584397/",
+                    label: "LinkedIn",
+                  },
+                  {
+                    Icon: Facebook,
+                    link: "https://www.facebook.com/arcadii.florean",
+                    label: "Facebook",
+                  },
+                  {
+                    Icon: Instagram,
+                    link: "https://www.instagram.com/arcadiiflorean/",
+                    label: "Instagram",
+                  },
+                  {
+                    Icon: MessageCircle,
+                    link: "https://wa.me/447454185152",
+                    label: "WhatsApp",
+                  },
                 ].map(({ Icon, link, label }) => (
                   <a
                     key={label}
@@ -552,11 +631,13 @@ function ContactPageModern() {
             </div>
 
             {/* Availability cu animație pulsantă */}
-            <div 
+            <div
               className={`bg-gradient-to-r from-green-500 to-emerald-500 p-6 rounded-2xl shadow-[0_0_30px_rgba(16,185,129,0.4)] transition-all duration-1000 hover:scale-105 hover:shadow-[0_0_50px_rgba(16,185,129,0.6)] ${
-                isVisible["sidebar"] ? "opacity-100 translate-x-0" : "opacity-0 translate-x-10"
+                isVisible["sidebar"]
+                  ? "opacity-100 translate-x-0"
+                  : "opacity-0 translate-x-10"
               }`}
-              style={{ transitionDelay: '500ms' }}
+              style={{ transitionDelay: "500ms" }}
             >
               <div className="flex items-center gap-3 mb-2">
                 <div className="w-3 h-3 bg-white rounded-full animate-pulse"></div>
@@ -565,8 +646,8 @@ function ContactPageModern() {
                 </h3>
               </div>
               <p className="text-green-100">
-                I'm open for collaborations and freelance projects. Let's
-                create something extraordinary together! 🚀
+                I'm open for collaborations and freelance projects. Let's create
+                something extraordinary together! 🚀
               </p>
             </div>
           </div>

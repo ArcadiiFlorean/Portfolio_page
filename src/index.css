@@ -15,3 +15,9 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
+
+.handwritten {
+  font-family: 'Alex Brush', cursive;
+  font-weight: 400;
+  letter-spacing: 2px;
+}

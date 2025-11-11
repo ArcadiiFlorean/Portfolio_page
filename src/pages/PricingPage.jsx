@@ -1,16 +1,25 @@
 import React, { useState, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 import {
-  Check,
-  ArrowLeft,
-  ArrowRight,
   Zap,
+  Rocket,
+  Crown,
   Globe,
+  Building2,
+  Briefcase,
+  Check, // ⭐⭐⭐ ADAUGĂ ASTA! ⭐⭐⭐
   CheckCircle2,
+  ArrowRight,
+  ArrowLeft,
   Clock,
+  Award,
   MessageSquare,
+  Mail,
+  Phone,
+  MapPin,
+  Palette,
+  Smartphone,
 } from "lucide-react";
-
 function PricingPage() {
   const [scrollY, setScrollY] = useState(0);
   const [isVisible, setIsVisible] = useState({});
@@ -28,7 +37,7 @@ function PricingPage() {
   // Intersection Observer pentru animații la scroll
   useEffect(() => {
     const observers = [];
-    
+
     Object.keys(sectionRefs.current).forEach((key) => {
       const element = sectionRefs.current[key];
       if (!element) return;
@@ -53,7 +62,7 @@ function PricingPage() {
     {
       id: "landing-starter",
       name: "Starter",
-      price: "500",
+      price: "1", // ⭐ ERA: "500" RON → ACUM: "80" GBP
       icon: Zap,
       description: "Perfect for quick tests and limited budget",
       deliveryTime: "3-5 days",
@@ -74,50 +83,48 @@ function PricingPage() {
     {
       id: "landing-standard",
       name: "Standard",
-      price: "800",
-      icon: Zap,
-      description: "Most popular package for successful campaigns",
+      price: "1", // ⭐ ERA: "800" RON
+      icon: Rocket,
+      description: "Most popular - perfect balance between price and quality",
       deliveryTime: "5-7 days",
-      revisions: "2 revisions",
-      popular: true,
+      revisions: "3 revisions",
+      popular: true, // ⭐ Badge "Most Popular"
       features: [
-        "1 optimized landing page",
-        "Semi-custom design",
-        "5 complete sections",
-        "Contact form + Newsletter",
+        "1 custom landing page",
+        "Custom design (based on brief)",
+        "5 sections (Hero, Features, Benefits, Testimonials, CTA)",
+        "Advanced contact form + Analytics",
         "Mobile & Tablet optimized",
-        "Full SEO optimization",
-        "Google Analytics included",
-        "Smooth animations",
+        "Advanced SEO optimization",
         "Hosting included (1 year)",
-        "SSL Certificate",
+        "SSL Certificate + Security",
+        "Performance optimization",
       ],
-      ideal: ["PPC Campaigns", "Lead Generation", "Product Launches"],
+      ideal: ["Product Launch", "Marketing Campaigns", "Lead Generation"],
     },
     {
       id: "landing-premium",
       name: "Premium",
-      price: "1,200",
-      icon: Zap,
-      description: "Complete solution for maximum conversion",
+      price: "1", // ⭐ ERA: "1200" RON
+      icon: Crown,
+      description: "Maximum conversion - for ambitious projects",
       deliveryTime: "7-10 days",
-      revisions: "Unlimited",
+      revisions: "Unlimited revisions",
       popular: false,
       features: [
-        "1 optimized landing page",
-        "100% custom design",
-        "Unlimited sections",
-        "Advanced multi-step form",
-        "A/B Testing ready",
-        "Perfect on Mobile, Tablet, Desktop",
-        "Advanced SEO + Schema markup",
-        "Google Analytics + Tag Manager",
-        "Premium custom animations",
-        "CRM/Email marketing integration",
+        "1 premium landing page",
+        "100% custom design (unique)",
+        "7+ sections (fully personalized)",
+        "Advanced forms + CRM integration",
+        "A/B Testing setup",
+        "Animations & micro-interactions",
+        "Premium SEO package",
         "Hosting included (1 year)",
-        "SSL Certificate + CDN",
+        "SSL + Premium Security",
+        "Performance + Speed optimization",
+        "Priority support (24h response)",
       ],
-      ideal: ["Large Campaigns", "Enterprise", "Maximum Conversion"],
+      ideal: ["High-Budget Campaigns", "Enterprise", "Maximum ROI"],
     },
   ];
 
@@ -125,78 +132,80 @@ function PricingPage() {
     {
       id: "website-basic",
       name: "Basic",
-      price: "1,500",
+      price: "1", // ⭐ ERA: "1500" RON
       icon: Globe,
-      description: "Simple presentation site for freelancers",
+      description: "Essential website for small businesses",
       deliveryTime: "7-10 days",
+      pages: "5-7 pages",
       revisions: "2 revisions",
       popular: false,
       features: [
-        "5-7 pages included",
-        "Semi-custom design",
-        "Fully responsive",
+        "5-7 professional pages",
+        "Premium template design",
+        "Responsive (Mobile, Tablet, Desktop)",
         "Contact form",
-        "SEO optimized",
-        "Google Analytics",
+        "Google Maps integration",
+        "Basic SEO optimization",
         "Hosting included (1 year)",
         "SSL Certificate",
+        "Admin panel (easy to update)",
       ],
-      ideal: ["Freelancers", "Portfolios", "Personal Site"],
+      ideal: ["Freelancers", "Small Business", "Portfolio"],
     },
     {
       id: "website-business",
       name: "Business",
-      price: "2,500",
-      icon: Globe,
-      description: "Complete solution for serious businesses",
+      price: "1", //
+      icon: Building2,
+      description: "Complete solution for growing businesses",
       deliveryTime: "10-14 days",
-      revisions: "3 revisions",
-      popular: true,
+      pages: "10-15 pages",
+      revisions: "4 revisions",
+      popular: true, // ⭐ Badge "Most Popular"
       features: [
-        "10-15 pages included",
-        "100% custom design",
-        "CMS admin panel",
-        "Integrated Blog/News",
+        "10-15 custom pages",
+        "Custom design (unique branding)",
+        "Blog system (CMS)",
         "Advanced contact forms",
-        "Advanced SEO all pages",
-        "Google Analytics + Search Console",
-        "Speed optimization",
+        "Newsletter integration",
         "Social media integration",
+        "Advanced SEO package",
         "Hosting included (1 year)",
-        "SSL Certificate + CDN",
-        "Daily automatic backup",
+        "SSL + Security",
+        "Performance optimization",
+        "Advanced admin panel",
+        "Analytics & tracking",
       ],
-      ideal: ["Companies", "Agencies", "Professional Services"],
+      ideal: ["Medium Business", "Agencies", "Professional Services"],
     },
     {
       id: "website-enterprise",
       name: "Enterprise",
-      price: "4,000",
-      icon: Globe,
-      description: "Enterprise platform with advanced features",
+      price: "1", //
+      icon: Briefcase,
+      description: "Premium solution for large companies",
       deliveryTime: "14-21 days",
-      revisions: "Unlimited",
+      pages: "15+ pages",
+      revisions: "Unlimited revisions",
       popular: false,
       features: [
-        "15+ pages included",
-        "Premium custom design",
-        "Advanced CMS with user roles",
-        "Blog + News + Resources",
-        "Multi-step form + chatbot",
-        "Enterprise SEO + multilingual",
-        "Advanced analytics + dashboards",
-        "Maximum optimization (90+ PageSpeed)",
-        "Custom API integrations",
-        "Members area (login/register)",
-        "Email marketing integration",
-        "Premium hosting (1 year)",
-        "SSL + CDN + Advanced Security",
-        "Automatic backup + recovery",
+        "15+ pages (unlimited)",
+        "100% custom design & branding",
+        "Advanced CMS system",
+        "Multi-language support (optional)",
+        "Custom features & integrations",
+        "E-commerce ready (optional)",
+        "Premium SEO + Marketing tools",
+        "Hosting included (1 year)",
+        "Premium Security & Backup",
+        "Performance + Speed optimization",
+        "Dedicated support",
+        "Training & documentation",
+        "Priority support (12h response)",
       ],
-      ideal: ["Corporations", "Complex Platforms", "SaaS"],
+      ideal: ["Large Companies", "E-commerce", "Complex Projects"],
     },
   ];
-
   const processSteps = [
     {
       number: "01",
@@ -250,11 +259,11 @@ function PricingPage() {
   return (
     <div className="min-h-screen bg-[#0a0a0a] text-white scroll-smooth overflow-hidden relative">
       {/* Animated background grid */}
-      <div 
+      <div
         className="fixed inset-0 opacity-10"
         style={{
           transform: `translateY(${scrollY * 0.5}px)`,
-          transition: 'transform 0.1s ease-out'
+          transition: "transform 0.1s ease-out",
         }}
       >
         <div
@@ -270,21 +279,21 @@ function PricingPage() {
       </div>
 
       {/* Red/Orange Glowing Orbs */}
-      <div 
+      <div
         className="fixed top-1/4 right-1/4 w-[600px] h-[600px] bg-gradient-to-br from-red-600 via-orange-600 to-red-700 rounded-full blur-[150px] opacity-30 animate-pulse"
         style={{
           transform: `translate(${scrollY * 0.15}px, ${scrollY * 0.2}px)`,
-          transition: 'transform 0.1s ease-out',
-          animationDuration: '4s'
+          transition: "transform 0.1s ease-out",
+          animationDuration: "4s",
         }}
       ></div>
       <div
         className="fixed bottom-1/4 left-1/3 w-[400px] h-[400px] bg-gradient-to-tr from-orange-600 to-red-600 rounded-full blur-[120px] opacity-20 animate-pulse"
-        style={{ 
+        style={{
           animationDelay: "2s",
-          animationDuration: '5s',
+          animationDuration: "5s",
           transform: `translate(${-scrollY * 0.1}px, ${-scrollY * 0.15}px)`,
-          transition: 'transform 0.1s ease-out'
+          transition: "transform 0.1s ease-out",
         }}
       ></div>
 
@@ -300,7 +309,7 @@ function PricingPage() {
                 <div className="absolute inset-0 bg-gradient-to-br from-red-500 to-orange-500 rounded-lg blur-md opacity-0 group-hover:opacity-50 transition-opacity"></div>
               </div>
               <span className="text-xl font-bold bg-gradient-to-r from-red-400 to-orange-400 bg-clip-text text-transparent">
-               CoffeeCoder
+                CoffeeCoder
               </span>
             </Link>
 
@@ -318,17 +327,19 @@ function PricingPage() {
       {/* Hero Section */}
       <section className="relative py-32 lg:py-40 overflow-hidden pt-32">
         <div className="max-w-7xl mx-auto px-6 lg:px-8 relative z-10">
-          <div 
+          <div
             ref={(el) => (sectionRefs.current["hero"] = el)}
             className={`max-w-3xl mx-auto text-center transition-all duration-1000 ${
-              isVisible["hero"] ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
+              isVisible["hero"]
+                ? "opacity-100 translate-y-0"
+                : "opacity-0 translate-y-10"
             }`}
           >
             <h1 className="text-4xl lg:text-5xl xl:text-6xl font-bold mb-6 bg-gradient-to-r from-red-400 via-orange-400 to-red-400 bg-clip-text text-transparent">
               Clear and Transparent Pricing
             </h1>
             <p className="text-xl text-gray-300 leading-relaxed mb-8">
-              No hidden costs. No unpleasant surprises. 
+              No hidden costs. No unpleasant surprises.
               <span className="block mt-2 font-semibold text-white">
                 Invest smartly in your online presence.
               </span>
@@ -376,10 +387,12 @@ function PricingPage() {
         <div className="max-w-7xl mx-auto px-6 lg:px-8 relative z-10">
           {/* Landing Pages Section */}
           <div id="landing-pages" className="scroll-mt-20 mb-20">
-            <div 
+            <div
               ref={(el) => (sectionRefs.current["landing-header"] = el)}
               className={`text-center mb-12 transition-all duration-1000 ${
-                isVisible["landing-header"] ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
+                isVisible["landing-header"]
+                  ? "opacity-100 translate-y-0"
+                  : "opacity-0 translate-y-10"
               }`}
             >
               <div className="inline-flex items-center gap-2 px-4 py-2 bg-red-500/20 border border-red-500/50 rounded-full mb-4">
@@ -396,7 +409,7 @@ function PricingPage() {
               </p>
             </div>
 
-            <div 
+            <div
               ref={(el) => (sectionRefs.current["landing-cards"] = el)}
               className="grid grid-cols-1 md:grid-cols-3 gap-8"
             >
@@ -410,11 +423,13 @@ function PricingPage() {
                         ? "border-red-500 shadow-[0_0_40px_rgba(239,68,68,0.4)] scale-105"
                         : "border-gray-700 hover:border-red-500/50 hover:shadow-[0_0_30px_rgba(239,68,68,0.2)]"
                     } ${
-                      isVisible["landing-cards"] ? "opacity-100 translate-y-0" : "opacity-0 translate-y-20"
+                      isVisible["landing-cards"]
+                        ? "opacity-100 translate-y-0"
+                        : "opacity-0 translate-y-20"
                     }`}
                     style={{
                       transitionDelay: `${index * 150}ms`,
-                      transformStyle: 'preserve-3d'
+                      transformStyle: "preserve-3d",
                     }}
                   >
                     {/* Popular Badge */}
@@ -441,11 +456,11 @@ function PricingPage() {
                       </p>
 
                       {/* Price */}
-                      <div className="flex items-baseline gap-2 mb-3">
-                        <span className="text-4xl font-bold bg-gradient-to-r from-red-400 to-orange-400 bg-clip-text text-transparent">
-                          {pkg.price}
+                      <div className="flex items-baseline justify-center">
+                        <span className="text-2xl font-bold text-red-400">
+                          £
                         </span>
-                        <span className="text-gray-400">RON</span>
+                        <span className="text-5xl font-bold">{pkg.price}</span>
                       </div>
 
                       {/* Meta info */}
@@ -463,12 +478,16 @@ function PricingPage() {
 
                     {/* Features */}
                     <div className="mb-6">
-                      <h4 className="font-bold text-white mb-3 text-sm">WHAT YOU GET:</h4>
+                      <h4 className="font-bold text-white mb-3 text-sm">
+                        WHAT YOU GET:
+                      </h4>
                       <ul className="space-y-2">
                         {pkg.features.map((feature, idx) => (
                           <li key={idx} className="flex items-start gap-2">
                             <Check className="w-4 h-4 text-red-400 flex-shrink-0 mt-0.5" />
-                            <span className="text-gray-300 text-sm">{feature}</span>
+                            <span className="text-gray-300 text-sm">
+                              {feature}
+                            </span>
                           </li>
                         ))}
                       </ul>
@@ -512,10 +531,12 @@ function PricingPage() {
 
           {/* Websites Section */}
           <div id="websites" className="scroll-mt-20">
-            <div 
+            <div
               ref={(el) => (sectionRefs.current["website-header"] = el)}
               className={`text-center mb-12 transition-all duration-1000 ${
-                isVisible["website-header"] ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
+                isVisible["website-header"]
+                  ? "opacity-100 translate-y-0"
+                  : "opacity-0 translate-y-10"
               }`}
             >
               <div className="inline-flex items-center gap-2 px-4 py-2 bg-orange-500/20 border border-orange-500/50 rounded-full mb-4">
@@ -532,7 +553,7 @@ function PricingPage() {
               </p>
             </div>
 
-            <div 
+            <div
               ref={(el) => (sectionRefs.current["website-cards"] = el)}
               className="grid grid-cols-1 md:grid-cols-3 gap-8"
             >
@@ -546,11 +567,13 @@ function PricingPage() {
                         ? "border-orange-500 shadow-[0_0_40px_rgba(251,146,60,0.4)] scale-105"
                         : "border-gray-700 hover:border-orange-500/50 hover:shadow-[0_0_30px_rgba(251,146,60,0.2)]"
                     } ${
-                      isVisible["website-cards"] ? "opacity-100 translate-y-0" : "opacity-0 translate-y-20"
+                      isVisible["website-cards"]
+                        ? "opacity-100 translate-y-0"
+                        : "opacity-0 translate-y-20"
                     }`}
                     style={{
                       transitionDelay: `${index * 150}ms`,
-                      transformStyle: 'preserve-3d'
+                      transformStyle: "preserve-3d",
                     }}
                   >
                     {/* Popular Badge */}
@@ -599,12 +622,16 @@ function PricingPage() {
 
                     {/* Features */}
                     <div className="mb-6">
-                      <h4 className="font-bold text-white mb-3 text-sm">WHAT YOU GET:</h4>
+                      <h4 className="font-bold text-white mb-3 text-sm">
+                        WHAT YOU GET:
+                      </h4>
                       <ul className="space-y-2">
                         {pkg.features.map((feature, idx) => (
                           <li key={idx} className="flex items-start gap-2">
                             <Check className="w-4 h-4 text-orange-400 flex-shrink-0 mt-0.5" />
-                            <span className="text-gray-300 text-sm">{feature}</span>
+                            <span className="text-gray-300 text-sm">
+                              {feature}
+                            </span>
                           </li>
                         ))}
                       </ul>
@@ -647,10 +674,12 @@ function PricingPage() {
           </div>
 
           {/* Custom Projects CTA */}
-          <div 
+          <div
             ref={(el) => (sectionRefs.current["custom-cta"] = el)}
             className={`mt-20 transition-all duration-1000 ${
-              isVisible["custom-cta"] ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
+              isVisible["custom-cta"]
+                ? "opacity-100 translate-y-0"
+                : "opacity-0 translate-y-10"
             }`}
           >
             <div className="bg-gradient-to-br from-red-900/30 to-orange-900/30 border-2 border-red-500/30 text-white p-10 rounded-3xl text-center backdrop-blur-sm hover:shadow-[0_0_60px_rgba(239,68,68,0.3)] transition-all duration-500">
@@ -658,8 +687,8 @@ function PricingPage() {
                 Need something custom?
               </h3>
               <p className="text-gray-300 text-lg mb-6 max-w-2xl mx-auto">
-                E-commerce, complex platforms or special features? 
-                Let's talk and I'll create a custom quote for you.
+                E-commerce, complex platforms or special features? Let's talk
+                and I'll create a custom quote for you.
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
                 <Link to="/contact">
@@ -676,10 +705,12 @@ function PricingPage() {
       {/* Process Section */}
       <section className="py-16 lg:py-24 relative">
         <div className="max-w-7xl mx-auto px-6 lg:px-8 relative z-10">
-          <div 
+          <div
             ref={(el) => (sectionRefs.current["process-header"] = el)}
             className={`text-center mb-16 transition-all duration-1000 ${
-              isVisible["process-header"] ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
+              isVisible["process-header"]
+                ? "opacity-100 translate-y-0"
+                : "opacity-0 translate-y-10"
             }`}
           >
             <h2 className="text-3xl lg:text-4xl font-bold mb-4 bg-gradient-to-r from-red-400 to-orange-400 bg-clip-text text-transparent">
@@ -690,15 +721,17 @@ function PricingPage() {
             </p>
           </div>
 
-          <div 
+          <div
             ref={(el) => (sectionRefs.current["process-steps"] = el)}
             className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8"
           >
             {processSteps.map((step, index) => (
-              <div 
-                key={index} 
+              <div
+                key={index}
                 className={`text-center transition-all duration-1000 ${
-                  isVisible["process-steps"] ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
+                  isVisible["process-steps"]
+                    ? "opacity-100 translate-y-0"
+                    : "opacity-0 translate-y-10"
                 }`}
                 style={{ transitionDelay: `${index * 100}ms` }}
               >
@@ -722,10 +755,12 @@ function PricingPage() {
       {/* FAQ Section */}
       <section className="py-16 lg:py-24 relative">
         <div className="max-w-4xl mx-auto px-6 lg:px-8 relative z-10">
-          <div 
+          <div
             ref={(el) => (sectionRefs.current["faq-header"] = el)}
             className={`text-center mb-12 transition-all duration-1000 ${
-              isVisible["faq-header"] ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
+              isVisible["faq-header"]
+                ? "opacity-100 translate-y-0"
+                : "opacity-0 translate-y-10"
             }`}
           >
             <h2 className="text-3xl lg:text-4xl font-bold mb-4 bg-gradient-to-r from-red-400 to-orange-400 bg-clip-text text-transparent">
@@ -736,7 +771,7 @@ function PricingPage() {
             </p>
           </div>
 
-          <div 
+          <div
             ref={(el) => (sectionRefs.current["faq-items"] = el)}
             className="space-y-4"
           >
@@ -744,13 +779,13 @@ function PricingPage() {
               <div
                 key={index}
                 className={`bg-gray-800/50 backdrop-blur-sm p-8 rounded-2xl border-2 border-gray-700 hover:border-red-500/50 hover:shadow-[0_0_30px_rgba(239,68,68,0.2)] transition-all duration-500 ${
-                  isVisible["faq-items"] ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
+                  isVisible["faq-items"]
+                    ? "opacity-100 translate-y-0"
+                    : "opacity-0 translate-y-10"
                 }`}
                 style={{ transitionDelay: `${index * 50}ms` }}
               >
-                <h3 className="text-xl font-bold text-white mb-3">
-                  {faq.q}
-                </h3>
+                <h3 className="text-xl font-bold text-white mb-3">{faq.q}</h3>
                 <p className="text-gray-300 leading-relaxed">{faq.a}</p>
               </div>
             ))}
@@ -758,9 +793,7 @@ function PricingPage() {
 
           {/* Still have questions */}
           <div className="text-center mt-12">
-            <p className="text-lg text-gray-300 mb-4">
-              Still have questions?
-            </p>
+            <p className="text-lg text-gray-300 mb-4">Still have questions?</p>
             <Link to="/contact">
               <button className="px-8 py-4 bg-gradient-to-r from-red-500 to-orange-500 text-white rounded-full font-bold hover:shadow-[0_0_40px_rgba(239,68,68,0.6)] transition-all hover:scale-105">
                 Contact Me Directly
@@ -773,10 +806,12 @@ function PricingPage() {
       {/* What's Included Banner */}
       <section className="py-16 lg:py-24 relative bg-gradient-to-b from-transparent to-gray-900/50">
         <div className="max-w-7xl mx-auto px-6 lg:px-8 relative z-10">
-          <div 
+          <div
             ref={(el) => (sectionRefs.current["included-header"] = el)}
             className={`text-center mb-12 transition-all duration-1000 ${
-              isVisible["included-header"] ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
+              isVisible["included-header"]
+                ? "opacity-100 translate-y-0"
+                : "opacity-0 translate-y-10"
             }`}
           >
             <h2 className="text-3xl lg:text-4xl font-bold mb-4 bg-gradient-to-r from-red-400 to-orange-400 bg-clip-text text-transparent">
@@ -787,18 +822,20 @@ function PricingPage() {
             </p>
           </div>
 
-          <div 
+          <div
             ref={(el) => (sectionRefs.current["included-items"] = el)}
             className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8"
           >
             {[
               {
                 title: "24/7 Support",
-                description: "Quick response to messages and technical problem solving",
+                description:
+                  "Quick response to messages and technical problem solving",
               },
               {
                 title: "Mobile-first",
-                description: "All websites are perfect on phone, tablet and desktop",
+                description:
+                  "All websites are perfect on phone, tablet and desktop",
               },
               {
                 title: "SEO Optimized",
@@ -809,17 +846,21 @@ function PricingPage() {
                 description: "Fast sites, optimized for loading speed",
               },
             ].map((item, index) => (
-              <div 
-                key={index} 
+              <div
+                key={index}
                 className={`text-center transition-all duration-1000 ${
-                  isVisible["included-items"] ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
+                  isVisible["included-items"]
+                    ? "opacity-100 translate-y-0"
+                    : "opacity-0 translate-y-10"
                 }`}
                 style={{ transitionDelay: `${index * 100}ms` }}
               >
                 <div className="w-12 h-12 bg-red-500/20 border-2 border-red-500 rounded-xl flex items-center justify-center mx-auto mb-4">
                   <CheckCircle2 className="w-6 h-6 text-red-400" />
                 </div>
-                <h3 className="text-lg font-bold mb-2 text-white">{item.title}</h3>
+                <h3 className="text-lg font-bold mb-2 text-white">
+                  {item.title}
+                </h3>
                 <p className="text-gray-400 text-sm">{item.description}</p>
               </div>
             ))}
@@ -834,8 +875,8 @@ function PricingPage() {
             Ready to get started?
           </h2>
           <p className="text-xl text-gray-300 mb-10 leading-relaxed">
-            Choose a package or contact me for a custom quote. 
-            The first consultation is always free!
+            Choose a package or contact me for a custom quote. The first
+            consultation is always free!
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link to="/contact">
@@ -851,8 +892,6 @@ function PricingPage() {
           </div>
         </div>
       </section>
-
-     
     </div>
   );
 }

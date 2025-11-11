@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { Menu, X } from "lucide-react";
+import { Menu, X, CreditCard } from "lucide-react";  // ⭐ Adaugă CreditCard
 
 function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -56,13 +56,24 @@ function Navbar() {
             ))}
           </div>
 
-          {/* CTA Button Desktop */}
-          <Link
-            to="/contact"
-            className="hidden md:inline-block px-6 py-2.5 bg-gradient-to-r from-red-500 to-orange-500 text-white rounded-lg font-semibold hover:shadow-[0_0_30px_rgba(239,68,68,0.6)] transition-all hover:scale-105"
-          >
-            Get Started
-          </Link>
+          {/* CTA Buttons Desktop */}
+          <div className="hidden md:flex items-center gap-3">
+            {/* ⭐⭐⭐ PAYMENT BUTTON ⭐⭐⭐ */}
+            <Link
+              to="/payment"
+              className="px-5 py-2.5 bg-white/5 border-2 border-green-500 text-green-400 rounded-lg font-semibold hover:bg-green-500/20 hover:shadow-[0_0_30px_rgba(34,197,94,0.6)] transition-all hover:scale-105 flex items-center gap-2"
+            >
+              <CreditCard className="w-5 h-5" />
+              <span>Pay Now</span>
+            </Link>
+
+            <Link
+              to="/contact"
+              className="px-6 py-2.5 bg-gradient-to-r from-red-500 to-orange-500 text-white rounded-lg font-semibold hover:shadow-[0_0_30px_rgba(239,68,68,0.6)] transition-all hover:scale-105"
+            >
+              Get Started
+            </Link>
+          </div>
 
           {/* Mobile Menu Button */}
           <button
@@ -92,6 +103,17 @@ function Navbar() {
                   {link.name}
                 </Link>
               ))}
+
+              {/* ⭐ Payment Button Mobile ⭐ */}
+              <Link
+                to="/payment"
+                onClick={() => setIsMenuOpen(false)}
+                className="px-5 py-3 bg-white/5 border-2 border-green-500 text-green-400 rounded-lg font-semibold text-center hover:bg-green-500/20 transition-all flex items-center justify-center gap-2"
+              >
+                <CreditCard className="w-5 h-5" />
+                <span>Pay Now</span>
+              </Link>
+
               <Link
                 to="/contact"
                 onClick={() => setIsMenuOpen(false)}
